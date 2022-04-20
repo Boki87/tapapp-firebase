@@ -76,7 +76,7 @@ const signMeOut = () => {
         }
 
        //update device links with user id
-       await setDoc(deviceRef, {user_id: user.uid, data_registered_at: +new Date()}, {merge: true})
+       await setDoc(deviceRef, {user_id: user.uid, date_registered_at: +new Date()}, {merge: true})
      
        return {success: 'Successfully registered', error: false}
   }
@@ -115,8 +115,29 @@ const getDevicesForUser = async (userId) => {
     return devicesData
 }
 
+const getDeviceData = async (id) => {
+  let deviceDataRef = doc(db, 'device_links', id)
+  let deviceData = await getDoc(deviceDataRef)
 
+  //get device type for device
+  let deviceType = await getDoc(doc(db, 'device_types', deviceData.data().device_type_id))
+  let deviceTypeData = {id: deviceType.id, ...deviceType.data()}
 
+  return {id: deviceData.id, device_type: deviceTypeData, ...deviceData.data()}
+}
+
+const getSocialsForDevice = async (deviceId, userId) => {
+  console.log(deviceId, userId)
+  const socialsRef = collection(db, 'socials')
+  const q = query(socialsRef, where('device_link_id', '==', deviceId))
+  const querySnapshot = await getDocs(q)
+  let socials = []
+  querySnapshot.forEach(doc => {
+    socials.push({id: doc.id, ...doc.data()})
+  })
+
+  return socials
+}
   
 export {
     signMeOut,
@@ -127,5 +148,7 @@ export {
     auth,
     isDeviceRegistered,
     registerUserWithDevice,
-    getDevicesForUser
+    getDevicesForUser,
+    getDeviceData,
+    getSocialsForDevice
 }

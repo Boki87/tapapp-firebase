@@ -5,7 +5,7 @@ export default function DeviceCard({ device }) {
   return (
     <Box
       w="full"
-      maxW="md"
+      maxW="sm"
       mx="auto"
       h="300px"
       rounded="xl"
