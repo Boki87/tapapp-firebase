@@ -1,5 +1,6 @@
 import {Link } from 'react-router-dom'
 import { Box, Image } from "@chakra-ui/react";
+import {FiEdit} from 'react-icons/fi'
 
 export default function DeviceCard({ device }) {
   return (
@@ -16,6 +17,7 @@ export default function DeviceCard({ device }) {
       justifyContent="center"
       mb="20px"
       cursor="pointer"
+      position="relative"
     >
       <Link 
         to={`d/${device.id}`}
@@ -29,6 +31,12 @@ export default function DeviceCard({ device }) {
           objectFit="cover"
         />
       {/* </a> */}
+      </Link>
+
+      <Link to={`edit/${device.id}`}>
+        <Box position="absolute" bottom="0" right="0" color="gray.600" w="35px" h="35px" cursor="pointer" display="flex" alignItems="center" justifyContent="center" fontSize="xl">
+          <FiEdit />
+        </Box>
       </Link>
     </Box>
   );

@@ -127,7 +127,7 @@ const getDeviceData = async (id) => {
 }
 
 const getSocialsForDevice = async (deviceId, userId) => {
-  console.log(deviceId, userId)
+  // console.log(deviceId, userId)
   const socialsRef = collection(db, 'socials')
   const q = query(socialsRef, where('device_link_id', '==', deviceId))
   const querySnapshot = await getDocs(q)
@@ -137,6 +137,17 @@ const getSocialsForDevice = async (deviceId, userId) => {
   })
 
   return socials
+}
+
+
+const updateDeviceData = async (id, data) => {
+  try {
+    let deviceDataRef = doc(db, 'device_links', id)
+    let updatedDevice = await setDoc(deviceDataRef, data, {merge: true})
+    console.log(updatedDevice)
+  }catch(err) {
+    console.log(err);
+  }
 }
   
 export {
@@ -150,5 +161,6 @@ export {
     registerUserWithDevice,
     getDevicesForUser,
     getDeviceData,
-    getSocialsForDevice
+    getSocialsForDevice,
+    updateDeviceData,
 }

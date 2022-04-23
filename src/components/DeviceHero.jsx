@@ -14,7 +14,7 @@ const DeviceHero = ({device}) => {
     return (
         <Box p="2">
             <Box position="relative">
-                <Box position="absolute" px="6px" top="5px" left="0" w="full" zIndex="2" display="flex" alignItems="center" color="gray.100">
+                <Box position="absolute" px="6px" pl="15px" top="5px" left="0" w="full" zIndex="2" display="flex" alignItems="center" color="gray.100">
                         <div>
                             <Link to='/'>
                                 <Image src="/assets/images/main-logo-white.png" h="auto" w="90px" />

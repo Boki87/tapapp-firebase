@@ -1,5 +1,5 @@
 
-export function getImageForSocialMedia(socialMedia) {
+export function getLogoForSocialMedia(socialMedia) {
 
     let imageSrc = ''
     switch(socialMedia) {
@@ -33,6 +33,9 @@ export function getImageForSocialMedia(socialMedia) {
         case 'strava':
             imageSrc = '/assets/social-icons/strava.png'
             break
+        case 'phone':
+            imageSrc = '/assets/social-icons/phone.png'
+            break
         default:
             imageSrc = ''
             break
@@ -53,9 +56,22 @@ export function getLinkForSocialMedia(type, provider, url) {
         case 'twitter':
             socialPrefix = 'https://www.twitter.com/'
             break
+        case 'instagram':
+            socialPrefix = 'https://www.instagram.com/'
+            break
+        case 'youtube':
+            socialPrefix = 'https://www.youtube.com/'
+            break
+        case 'linkedin':
+            socialPrefix = 'https://www.linkedin.com/'
+            break
+        case 'github':
+            socialPrefix = 'https://github.com/'
+            break
         default:
             socialPrefix = ''
             break
+        //TODO: add more social media providers
     }
 
 
@@ -65,15 +81,20 @@ export function getLinkForSocialMedia(type, provider, url) {
     }else {
         link = `${socialPrefix}${url}`
     }
-   }else if(type == 'email') {
-        //TODO: email link
-   }else if(type == 'phone') {
-        //TODO: phone link 
-   }else if(type == 'website') {
-        if(url.includes('http') || url.includes('https')) {
-            link = url
-        }else {
-            link = `https://${url}`
+   }
+  
+   if(type == 'contact') {
+
+        if(provider == 'email') {
+                link = `mailto:${url}`
+        }else if(provider == 'phone') {
+                link = `tel:${url}`
+        }else if(provider == 'website') {
+                if(url.includes('http') || url.includes('https')) {
+                    link = url
+                }else {
+                    link = `https://${url}`
+                }
         }
    }
 

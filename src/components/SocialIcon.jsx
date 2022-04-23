@@ -1,12 +1,12 @@
 import {Box, Image} from '@chakra-ui/react'
-import {getImageForSocialMedia, getLinkForSocialMedia} from '../lib/utils'
+import {getLogoForSocialMedia, getLinkForSocialMedia} from '../lib/utils'
 
 const SocialIcon = ({social}) => {
   
-    let imageSrc = getImageForSocialMedia(social.provider)
+    let imageSrc = getLogoForSocialMedia(social.provider)
     let link = getLinkForSocialMedia(social.type, social.provider, social.url)
 
-    let image = <Image src={imageSrc} objectFit='contain' w="100%" h="100%"/>
+    let image = <Image src={imageSrc} objectFit='contain' w="80%" h="80%"/>
 
     return (
         <a href={link} target="_blank">

@@ -11,7 +11,6 @@ const container = document.getElementById('root')
 const root = createRoot(container)
 
 root.render(
-  <React.StrictMode>
     <Router>
       <Store>
         <ChakraProvider theme={theme}> 
@@ -28,5 +27,4 @@ root.render(
         </ChakraProvider>
       </Store>
     </Router>
-  </React.StrictMode>
 )

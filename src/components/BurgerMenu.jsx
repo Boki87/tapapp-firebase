@@ -3,7 +3,7 @@ import { Button, Box, Image } from "@chakra-ui/react";
 import { CgMenuRight, CgClose } from "react-icons/cg";
 import { useMainMenuContext } from "../context";
 import { useAuthContext } from "../context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export const BurgerMenuButton = () => {
   const { toggleMainMenu } = useMainMenuContext();
@@ -42,7 +42,9 @@ export const BurgerMenuBar = ({ children }) => {
         h="50px"
         px="10px"
       >
-        <Image src="/assets/images/main-logo.png" h="auto" w="90px" />
+        <Link to="/">
+          <Image src="/assets/images/main-logo.png" h="auto" w="90px" />
+        </Link>
 
         <Button
           onClick={toggleMainMenu}

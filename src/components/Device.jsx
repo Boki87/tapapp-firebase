@@ -6,6 +6,8 @@ import { useDevicesContext } from '../context'
 import DeviceHero from './DeviceHero'
 import DeviceCTA from './DeviceCTA'
 import DeviceSocials from './DeviceSocials'
+import { useAuthContext } from '../context'
+
 
 const Device = () => {
 
@@ -16,6 +18,8 @@ const Device = () => {
     const {id} = useParams()
     const toast = useToast()
     const {checkIfDeviceIsRegistered} = useDevicesContext()
+    const {user} = useAuthContext()
+
 
     async function int() {
 
@@ -61,7 +65,9 @@ const Device = () => {
     }
 
     if(!deviceData.is_edited) {
-
+        if(!user) {
+            navigate('/login')
+        }
         return (<Center  w="full" h="full" bg="white">
             <Box textAlign={'center'} fontSize="xl">
                         <Link to={`/edit/${id}`}>
@@ -78,7 +84,7 @@ const Device = () => {
 
     return (<Box h="full" w="full" overflow="auto">
         <DeviceHero device={deviceData}/>
-        <DeviceCTA />
+        <DeviceCTA deviceData={deviceData} socialsData={socialsData} />
         <DeviceSocials socials={socialsData}/>
     </Box>)
 }
