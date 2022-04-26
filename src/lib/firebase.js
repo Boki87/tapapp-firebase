@@ -1,6 +1,8 @@
+import { toast } from '@chakra-ui/react'
 import { initializeApp } from 'firebase/app'
 import { getAuth, signOut, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import {getFirestore, doc, addDoc, getDoc, collection, getDocs, deleteDoc, setDoc,query, where} from 'firebase/firestore'
+import {ref, uploadBytes, getDownloadURL, getStorage} from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYGm8vhfc9ape8U5Tei_KLKM2Uu61kSgI",
@@ -17,6 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 const provider = new GoogleAuthProvider()
+const storage = getStorage(app)
+
 
 const auth = getAuth(app)
 
@@ -141,15 +145,37 @@ const getSocialsForDevice = async (deviceId, userId) => {
 
 
 const updateDeviceData = async (id, data) => {
+  if(!data) {
+    return
+  }
   try {
     let deviceDataRef = doc(db, 'device_links', id)
-    let updatedDevice = await setDoc(deviceDataRef, data, {merge: true})
-    console.log(updatedDevice)
+    if(!data?.is_edited) {
+      data.is_edited = true
+    }
+    let {device_type, ...rest} = data
+    let updatedDevice = await setDoc(deviceDataRef, rest, {merge: true})
   }catch(err) {
     console.log(err);
   }
 }
-  
+
+const uploadAvatar = async (file, deviceLinkId) => {
+  // console.log(file, deviceLinkId)
+  if(!file) return
+  if(file.type.split('/')[0] !== 'image') {
+    throw new Error('Invalid file type')
+  }
+  let ext = "." + file.name.split('.').pop()
+  const avatarRef = ref(storage, `avatars/${deviceLinkId + ext}`)
+  const uploadSnapshot = await uploadBytes(avatarRef, file)
+  let uploadUrl = getDownloadURL(uploadSnapshot.ref)
+  return uploadUrl
+
+}
+
+
+
 export {
     signMeOut,
     signIn,
@@ -163,4 +189,5 @@ export {
     getDeviceData,
     getSocialsForDevice,
     updateDeviceData,
+    uploadAvatar
 }

@@ -55,7 +55,7 @@ const DeviceCTA = ({deviceData, socialsData}) => {
 
     return (
         <HStack justifyContent="center" mb="10px">
-            <ButtonGroup isAttached colorScheme="blue">
+            <ButtonGroup isAttached colorScheme={deviceData.bg_color ? deviceData.bg_color.split('.')[0] : 'blue'}>
                 <Button onClick={saveToContacts} mr='-px' w="200px">Connect</Button>
                 <IconButton onClick={shareProfile} borderLeft="1px solid white" aria-label='Add to friends' fontSize="xl" w="50px" icon={<BiMailSend />} />
             </ButtonGroup>

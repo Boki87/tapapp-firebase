@@ -24,7 +24,7 @@ const DeviceHero = ({device}) => {
                         <BurgerMenuButton color="white"/>
                 </Box>
 
-                <Box w="full" h="200px" bg="blue.500" borderRadius="3xl" position="relative">
+                <Box w="full" h="200px" bg={device.bg_color} borderRadius="3xl" position="relative">
 
                     <Box position="absolute" bottom="0" left="0" w="full" display="flex" justifyContent="center">
                             <Avatar animation={avatarAnimation} name={device.name} src={device.avatar} w="150px" h="150px" mb="-30px" border="3px solid white" shadow="md" />

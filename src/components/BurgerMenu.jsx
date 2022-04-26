@@ -30,6 +30,7 @@ export const BurgerMenuBar = ({ children }) => {
       position="absolute"
       top="0"
       left="0"
+      zIndex={3}
       css={{
         backdropFilter: "blur(10px)",
         background: "rgba(255,255,255,0.7)",
