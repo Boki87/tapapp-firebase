@@ -1,11 +1,13 @@
 import UserContextProvider, { useAuthContext } from './user'
 import DevicesContextProvider, { useDevicesContext } from './devices'
+import SocialsContextProvider, { useSocialsContext } from './socials'
 import MainMenuContextProvider, { useMainMenuContext } from "./mainMenu";
 
 export {
     useAuthContext,
     useDevicesContext,
-    useMainMenuContext
+    useMainMenuContext,
+    useSocialsContext,
   }
 
 const Store = ({ children }) => {
@@ -15,9 +17,11 @@ const Store = ({ children }) => {
         
           <UserContextProvider>
               <DevicesContextProvider>
-                <MainMenuContextProvider>
-                  {children}
-                </MainMenuContextProvider>
+                <SocialsContextProvider>
+                  <MainMenuContextProvider>
+                    {children}
+                  </MainMenuContextProvider>
+                </SocialsContextProvider>
               </DevicesContextProvider>
           </UserContextProvider>
      

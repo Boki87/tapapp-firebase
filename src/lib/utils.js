@@ -1,5 +1,148 @@
 import heic2any from 'heic2any'
 
+export const socials = [
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'facebook',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'twitter',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'instagram',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'youtube',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'linkedin',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'github',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'spotify',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'tiktok',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'pinterest',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'strava',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'phone',
+        type: 'contact',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'email',
+        type: 'contact',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'website',
+        type: 'contact',
+        url: '',
+        user_id: ''
+    },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'video',
+        type: 'video',
+        url: '',
+        user_id: ''
+    },
+]
+
 
 export function getLogoForSocialMedia(socialMedia) {
 
@@ -37,6 +180,15 @@ export function getLogoForSocialMedia(socialMedia) {
             break
         case 'phone':
             imageSrc = '/assets/social-icons/phone.png'
+            break
+        case 'email':
+            imageSrc = '/assets/social-icons/email.png'
+            break
+        case 'website':
+            imageSrc = '/assets/social-icons/website.png'
+            break
+        case 'video':
+            imageSrc = '/assets/social-icons/video.png'
             break
         default:
             imageSrc = ''
@@ -98,6 +250,10 @@ export function getLinkForSocialMedia(type, provider, url) {
                     link = `https://${url}`
                 }
         }
+   }
+
+   if(type == 'video') {
+        link = url
    }
 
    return link

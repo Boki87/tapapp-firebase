@@ -1,24 +1,39 @@
 import {useEffect, useState} from 'react'
-import {Input,FormControl,FormLabel, Button, Box, Center, Spinner, Image, Avatar,Textarea, Spacer, Progress, useToast} from '@chakra-ui/react'
+import {Input,FormControl,FormLabel, Button, Box, Center, Spinner, Image, Avatar,Textarea, Spacer, Progress, useToast, IconButton} from '@chakra-ui/react'
 import {useParams, Link} from 'react-router-dom'
 import { BurgerMenuBar, BurgerMenuButton } from "./BurgerMenu";
 import { getDeviceData, getSocialsForDevice, updateDeviceData, uploadAvatar } from '../lib/firebase';
-import {useAuthContext} from '../context'
+import {useAuthContext, useSocialsContext} from '../context'
 import {BsUpload} from 'react-icons/bs'
+import {VscAdd} from 'react-icons/vsc'
 import { useDebounce } from '../lib/hooks';
 import ChakraColorPicker from './ChakraColorPicker';
 import {compressImage} from '../lib/utils'
-
+import SocialIconDrawer from './SocialIconDrawer'
+import SocialIconEditDrawer from './SocialIconEditDrawer'
+import SocialIcon from './SocialIcon'
 
 const EditDevice = () => {
 
     let toast = useToast()
     const {id} = useParams()
     const {user} = useAuthContext()
+    const {socials, setSocials, activeEditLink, setActiveEditLink} = useSocialsContext()
     const [deviceData, setDeviceData] = useState(null)
-    const [socials, setSocials] = useState([])
     const [loading, setLoading] = useState(true)
     const [updating, setUpdating] = useState(true)
+
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false)
+    // const [activeEditIcon, setActiveEditIcon] = useState(null)
+
+    useEffect(() => {
+        if(activeEditLink) {
+            setIsEditDrawerOpen(true)
+        }else {
+            setIsEditDrawerOpen(false)
+        }
+    }, [activeEditLink])
 
     const debounceName = useDebounce(deviceData?.name, 1000);
     const debounceTitle = useDebounce(deviceData?.title, 1000);
@@ -113,7 +128,6 @@ const EditDevice = () => {
         </Center>)
     }
 
-
     return (
         <Box w="full" h="full" pt="10px" px="10px" pb="80px" overflow="auto">
             {updating && 
@@ -151,6 +165,21 @@ const EditDevice = () => {
                     <Textarea placeholder="description" variant="filled" name="description" value={deviceData.description} onInput={deviceDataPropChange}/>
                 </FormControl>
             </Box>
+
+
+            <Box display='flex' flexWrap="wrap" justifyContent="center" pb="70px">
+                {socials.map((social, index) => {
+                    return (<SocialIcon social={social} onClick={() => setActiveEditLink(social.id)} editMode={true} key={social.id}/>)
+                })}
+            </Box>
+
+            <Button rightIcon={<VscAdd />} onClick={() => setIsDrawerOpen(true)} colorScheme="blue" color="white" position="absolute" bottom="70px" right="10px">
+                Add Social
+            </Button>
+                
+            <SocialIconDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} deviceId={id}/>
+
+            <SocialIconEditDrawer isOpen={isEditDrawerOpen} onClose={() => setActiveEditLink(null)} editSocialId={activeEditLink} />
         </Box>
     )
 }

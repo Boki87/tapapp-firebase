@@ -174,7 +174,21 @@ const uploadAvatar = async (file, deviceLinkId) => {
 
 }
 
+//socials functions
 
+const updateSocial = async (id, obj) => {
+  let socialRef = doc(db, 'socials', id)
+  let {social_type_id, ...rest} = obj
+  let updatedSocial = await setDoc(socialRef, rest, {merge: true})
+}
+
+
+const addSocial = async (obj) => {
+  let newSocial = await addDoc(collection(db, 'socials'), obj)
+  let newSocialRef = doc(db, 'socials', newSocial.id)
+  let newSocialData = await getDoc(newSocialRef)
+  return {id: newSocialData.id, ...newSocialData.data()}
+}
 
 export {
     signMeOut,
@@ -189,5 +203,7 @@ export {
     getDeviceData,
     getSocialsForDevice,
     updateDeviceData,
-    uploadAvatar
+    uploadAvatar,
+    updateSocial,
+    addSocial
 }
