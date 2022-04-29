@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {Input,FormControl,FormLabel, Button, Box, Center, Spinner, Image, Avatar,Textarea, Spacer, Progress, useToast, IconButton} from '@chakra-ui/react'
+import {Text, Input,FormControl,FormLabel, Button, Box, Center, Spinner, Image, Avatar,Textarea, Spacer, Progress, useToast, IconButton} from '@chakra-ui/react'
 import {useParams, Link} from 'react-router-dom'
 import { BurgerMenuBar, BurgerMenuButton } from "./BurgerMenu";
 import { getDeviceData, getSocialsForDevice, updateDeviceData, uploadAvatar } from '../lib/firebase';
@@ -127,6 +127,17 @@ const EditDevice = () => {
     }, [socials])
 
 
+    let showExplainer = false
+    if(socials.length > 0 && !embeddedVideo) {
+        showExplainer = true
+    } else if(socials.length == 1 && embeddedVideo) {
+        showExplainer = false
+    } else if(socials.length > 0 && !embeddedVideo) {
+        showExplainer = true
+    } else if(socials.length > 0 && embeddedVideo) {
+        showExplainer = true
+    }
+
     if(loading || !deviceData) {
         return (<Center position="absolute" top='0px' left='0px' zIndex={10} w="full" h="full" bg="white">
             <Box position="relative">
@@ -175,7 +186,9 @@ const EditDevice = () => {
             </Box>
 
             {embeddedVideo && <VideoEmbedEdit videoData={embeddedVideo}/>}
-
+            {showExplainer && <Center>
+                <Text color="gray.600">Tap on any icon below to edit</Text>
+            </Center>}
             <Box display='flex' flexWrap="wrap" justifyContent="center" pb="70px">
                 {socials.map((social, index) => {
                     if(social.provider != 'video') {

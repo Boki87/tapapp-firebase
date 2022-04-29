@@ -1,6 +1,8 @@
 import {Image, Box, Avatar, Text, Spacer, keyframes } from '@chakra-ui/react'
 import {Link} from 'react-router-dom'
 import { BurgerMenuButton } from './BurgerMenu'
+import {useAuthContext} from '../context'
+import {FiEdit} from 'react-icons/fi'
 
 const animationKeyframes = keyframes`
     0% {transform: translateY(30px); opacity: 0; scale: 0.8}
@@ -10,6 +12,9 @@ const animationKeyframes = keyframes`
 const avatarAnimation = `${animationKeyframes} 1s ease-in-out`
 
 const DeviceHero = ({device}) => {
+
+    const {user} = useAuthContext()
+
 
     return (
         <Box p="2">
@@ -29,6 +34,12 @@ const DeviceHero = ({device}) => {
                     <Box position="absolute" bottom="0" left="0" w="full" display="flex" justifyContent="center">
                             <Avatar animation={avatarAnimation} name={device.name} src={device.avatar} w="150px" h="150px" mb="-30px" border="3px solid white" shadow="md" />
                     </Box> 
+
+                    {user && user.uid == device.user_id && <Box position="absolute" bottom="10px" right="15px" color="white" fontSize="xl">
+                        <Link to={`/edit/${device.id}`} style={{cursor:'pointer'}}>
+                            <FiEdit />
+                        </Link>
+                    </Box>}
                 </Box>
                 <Box pt="40px" textAlign="center" mb="15px">
                     <Text fontSize="2xl" fontWeight="bold" color="gray.700">{device.name}</Text>

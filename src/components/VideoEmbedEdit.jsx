@@ -11,6 +11,7 @@ const VideoEmbedEdit = ({videoData}) => {
     const {updateSocial, deleteSocial} = useSocialsContext()
     const [videoState, setVideoState] = useState(videoData)
     const [videoUrl, setVideoUrl] = useState('')
+    const [loading, setLoading] = useState(false)
 
     function changeHandler(e) {
         let val = e.target.name == 'is_public' ? e.target.checked : e.target.value
@@ -19,11 +20,18 @@ const VideoEmbedEdit = ({videoData}) => {
     }
 
     function saveHandler() {
+        setLoading(true)
       updateSocial(videoState.id, videoState)
+      setTimeout(() => {
+        setLoading(false)
+      },400)
     }
 
     function deleteHandler() {
-        deleteSocial(videoState.id)
+        setLoading(true)
+        setTimeout(() => {
+            deleteSocial(videoState.id)
+        },400)
     }
 
     useEffect(() => {
@@ -32,7 +40,7 @@ const VideoEmbedEdit = ({videoData}) => {
     },[videoState])
 
     return (
-        <Box p="10px" bg="gray.50" borderRadius="lg" border="1px" borderColor="gray.300">
+        <Box p="10px" bg="gray.50" borderRadius="lg" border="1px" borderColor="gray.300" mb='20px'>
             <Text mb="10px">Embed Video</Text>
             {videoUrl && videoUrl != '' && <iframe src={videoUrl} style={{width:'100%', height: '200px', borderRadius: '10px', marginBottom:'10px'}}/> }
             <FormControl mb="20px">
@@ -48,9 +56,9 @@ const VideoEmbedEdit = ({videoData}) => {
                     <Switch colorScheme="blue" size="lg" name="is_public" isChecked={videoState.is_public} value={videoState.is_public} onChange={changeHandler}/> 
             </FormControl> 
             <Center>
-                <Button onClick={deleteHandler} rightIcon={<RiDeleteBinLine />} colorScheme="red">Delete</Button>
+                <Button isLoading={loading} onClick={deleteHandler} rightIcon={<RiDeleteBinLine />} colorScheme="red">Delete</Button>
                 <Box w="10px"></Box>
-                <Button onClick={saveHandler} rightIcon={<AiOutlineSave />} colorScheme="blue">Save</Button>
+                <Button isLoading={loading} onClick={saveHandler} rightIcon={<AiOutlineSave />} colorScheme="blue">Save</Button>
             </Center>
         </Box>
     )
