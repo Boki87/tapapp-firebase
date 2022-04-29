@@ -171,7 +171,7 @@ const Register = () => {
                 </Button>
                
               </HStack>
-                <Box display={'flex'} justifyContent="space-between" flexWrap="wrap">
+                {/* <Box display={'flex'} justifyContent="space-between" flexWrap="wrap">
                     <Text color="blue.500" fontSize="sm" _hover={{ textDecoration: 'underline' }} as="span">
                         <Link to="/resend-confirmation">
                             Didn't receive confirmation email?
@@ -182,7 +182,7 @@ const Register = () => {
                             Forgot Password? 
                         </Link>
                     </Text>
-                </Box>
+                </Box> */}
             </Stack>
           </form>
         </Box>
