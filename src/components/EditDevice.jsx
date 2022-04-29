@@ -12,6 +12,7 @@ import {compressImage} from '../lib/utils'
 import SocialIconDrawer from './SocialIconDrawer'
 import SocialIconEditDrawer from './SocialIconEditDrawer'
 import SocialIcon from './SocialIcon'
+import VideoEmbedEdit from './VideoEmbedEdit';
 
 const EditDevice = () => {
 
@@ -22,10 +23,10 @@ const EditDevice = () => {
     const [deviceData, setDeviceData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [updating, setUpdating] = useState(true)
-
+    const [embeddedVideo, setEmbeddedVideo] = useState(null)
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false)
-    // const [activeEditIcon, setActiveEditIcon] = useState(null)
+    
 
     useEffect(() => {
         if(activeEditLink) {
@@ -60,12 +61,9 @@ const EditDevice = () => {
         }
     }
 
-  
-
     function deviceDataPropChange(e) {
         setDeviceData({...deviceData, [e.target.name]: e.target.value})
     }
-
 
     async function updateData(id, data) {
         try {
@@ -118,6 +116,16 @@ const EditDevice = () => {
         updateData(id, deviceData)
     }, [debounceName, debounceTitle, debounceDescription])
 
+    useEffect(() => {
+        //get embedded video
+        let video = socials.find(s => s.provider === 'video')
+        if(socials.length > 0 && video) {
+            setEmbeddedVideo(video)
+        } else {
+            setEmbeddedVideo(null)
+        }
+    }, [socials])
+
 
     if(loading || !deviceData) {
         return (<Center position="absolute" top='0px' left='0px' zIndex={10} w="full" h="full" bg="white">
@@ -166,10 +174,13 @@ const EditDevice = () => {
                 </FormControl>
             </Box>
 
+            {embeddedVideo && <VideoEmbedEdit videoData={embeddedVideo}/>}
 
             <Box display='flex' flexWrap="wrap" justifyContent="center" pb="70px">
                 {socials.map((social, index) => {
-                    return (<SocialIcon social={social} onClick={() => setActiveEditLink(social.id)} editMode={true} key={social.id}/>)
+                    if(social.provider != 'video') {
+                        return (<SocialIcon social={social} onClick={() => setActiveEditLink(social.id)} editMode={true} key={social.id}/>)
+                    }
                 })}
             </Box>
 

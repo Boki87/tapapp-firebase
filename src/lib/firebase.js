@@ -190,6 +190,12 @@ const addSocial = async (obj) => {
   return {id: newSocialData.id, ...newSocialData.data()}
 }
 
+const deleteSocial = async (id) => {
+  let socialRef = doc(db, 'socials', id)
+  await deleteDoc(socialRef)
+}
+
+
 export {
     signMeOut,
     signIn,
@@ -205,5 +211,6 @@ export {
     updateDeviceData,
     uploadAvatar,
     updateSocial,
-    addSocial
+    addSocial,
+    deleteSocial
 }

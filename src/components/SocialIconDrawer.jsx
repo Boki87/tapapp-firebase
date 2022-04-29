@@ -1,12 +1,12 @@
 import {useState} from 'react'
-import {Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,DrawerCloseButton} from '@chakra-ui/react'
+import {Box, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,DrawerCloseButton} from '@chakra-ui/react'
 import {socials as socialsData} from '../lib/utils'
 import SocialIcon from './SocialIcon'
 import { useSocialsContext } from '../context'
 
 const SocialIconDrawer = ({isOpen, onClose, deviceId}) => {
 
-    const {addSocial} = useSocialsContext()
+    const {addSocial, socials} = useSocialsContext()
 
     function addLink(link) {
         addSocial(link, deviceId)
@@ -20,8 +20,18 @@ const SocialIconDrawer = ({isOpen, onClose, deviceId}) => {
                 <DrawerContent>
                     <DrawerCloseButton onClick={onClose}/>
                 <DrawerHeader borderBottomWidth='1px'>Add Link</DrawerHeader>
-                <DrawerBody display="flex" flexWrap="wrap" justifyContent="center" p="0px" mb="30px">
-                    {socialsData.map(social => (<SocialIcon onClick={() => addLink(social)} key={social.provider} social={social}/>))}
+                <DrawerBody p="0px">
+                    <Box display="flex" flexWrap="wrap" justifyContent="center" mb="80px">
+                        {socialsData.map(social => {
+                                let hasEmbedVideo = socials.filter(s => s.type == 'video')[0]
+                                if(hasEmbedVideo?.type == social.type) {
+                                    return null
+                                } else {
+                                    return (<SocialIcon onClick={() => addLink(social)} key={social.provider} social={social}/>)
+                                }
+                            }
+                        )}
+                    </Box>
                 </DrawerBody>
                 </DrawerContent>
             </Drawer>

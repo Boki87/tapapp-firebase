@@ -222,6 +222,18 @@ export function getLinkForSocialMedia(type, provider, url) {
         case 'github':
             socialPrefix = 'https://github.com/'
             break
+        case 'spotify':
+            socialPrefix = 'https://www.spotify.com/'
+            break
+        case 'tiktok':
+            socialPrefix = 'https://www.tiktok.com/'
+            break
+        case 'pinterest':
+            socialPrefix = 'https://www.pinterest.com/'
+            break
+        case 'strava':
+            socialPrefix = 'https://www.strava.com/'
+            break
         default:
             socialPrefix = ''
             break
@@ -298,4 +310,27 @@ export function compressImage(imageData) {
         }
         reader.readAsDataURL(imageData)
     })
+}
+
+
+export const sanitizeVideo = (url) => {
+    if(!url && !url.length ) return ''
+    url = url.split('&')[0]
+    var sanitizedUrl = ''
+    if(url.includes('vimeo') && !url.includes('player')) {
+        let link = url.split('https://vimeo.com/')[1]
+        sanitizedUrl = `https:/player.vimeo.com/video/${link}`
+    } else if (url.includes('youtu') && !url.includes('embed')) {
+        if(url.includes('watch')) {
+            let link = url.split('https://www.youtube.com/watch?v=')[1]
+            sanitizedUrl = `https://www.youtube.com/embed/${link}`
+         } else {
+             let link = url.split('https://youtu.be/')[1]
+             sanitizedUrl = `https://www.youtube.com/embed/${link}`
+         }
+    } else {
+        sanitizedUrl = ''
+    }
+
+    return sanitizedUrl
 }

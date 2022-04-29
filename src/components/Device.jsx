@@ -27,9 +27,7 @@ const Device = () => {
             setLoading(true)
             let isRegistered = await checkIfDeviceIsRegistered(id)
             if(isRegistered) {
-                // console.log('fetch device data');
                 let deviceRes = await getDeviceData(id)
-                // console.log(deviceRes)
                 await setDeviceData(deviceRes)
                 let socials = await getSocialsForDevice(id, deviceRes.user_id)
                 setSocialsData(socials)

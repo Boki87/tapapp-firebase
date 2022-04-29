@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, createContext } from "react";
 import {useAuthContext} from './user'
-import { updateSocial as updateSocialInDb, addSocial as addSocialToDb } from "../lib/firebase";
+import { updateSocial as updateSocialInDb, addSocial as addSocialToDb, deleteSocial as deleteSocialFromDb } from "../lib/firebase";
 import { useDebounce } from "../lib/hooks";
 
 const SocialsContext = createContext({devices: []});
@@ -26,6 +26,7 @@ const SocialsContextProvider = ({ children }) => {
         try {
             setUpdatingSocials(true)
             let newSocial = await addSocialToDb(obj)
+            // setActiveEditLink(newSocial.id)
             setSocials([...socials, newSocial])
             setUpdatingSocials(false)
         } catch(err) {
@@ -55,10 +56,20 @@ const SocialsContextProvider = ({ children }) => {
     }
 
    
-
+    async function deleteSocial(id) {
+        try {
+            setUpdatingSocials(true)
+            await deleteSocialFromDb(id)
+            setSocials(socials.filter(s => s.id !== id))
+            setUpdatingSocials(false)
+        } catch(err) {
+            console.log(err);
+            setUpdatingSocials(false)
+        }
+    }
 
     return (
-      <SocialsContext.Provider value={{ socials, setSocials, updateSocial, updatingSocials,activeEditLink, setActiveEditLink, addSocial }}>{children}</SocialsContext.Provider>
+      <SocialsContext.Provider value={{ socials, setSocials, updateSocial, updatingSocials,activeEditLink, setActiveEditLink, addSocial, deleteSocial }}>{children}</SocialsContext.Provider>
     );
   };
   

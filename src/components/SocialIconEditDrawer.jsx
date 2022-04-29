@@ -2,12 +2,13 @@ import {useEffect, useState} from 'react'
 import { Image, Spacer, HStack, Button, Progress, Box, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,DrawerCloseButton,FormControl, FormLabel, Input, Switch} from '@chakra-ui/react'
 import { useSocialsContext } from '../context'
 import {AiOutlineSave} from 'react-icons/ai'
+import {RiDeleteBack2Line} from 'react-icons/ri'
 import { getLogoForSocialMedia } from '../lib/utils'
 
 const SocialIconEditDrawer = ({isOpen, onClose, editSocialId}) => {
 
 
-    const {socials, updateSocial, updatingSocials} = useSocialsContext()
+    const {socials, updateSocial, updatingSocials, deleteSocial} = useSocialsContext()
     const [social, setSocial] = useState(null)
 
     useEffect(() => {
@@ -23,6 +24,11 @@ const SocialIconEditDrawer = ({isOpen, onClose, editSocialId}) => {
 
     function saveSocialHandler() {
         updateSocial(editSocialId, social)
+    }
+
+    function deleteSocialHandler() {
+        deleteSocial(social.id)
+        onClose()
     }
 
 
@@ -63,8 +69,11 @@ const SocialIconEditDrawer = ({isOpen, onClose, editSocialId}) => {
             </FormControl>
             <Spacer />
             <HStack>
-                <Button onClick={onClose}>Close</Button>
+                <Button onClick={deleteSocialHandler} colorScheme="red">
+                    <RiDeleteBack2Line />
+                </Button>
                 <Spacer />
+                <Button onClick={onClose}>Close</Button>
                 <Button onClick={saveSocialHandler} rightIcon={<AiOutlineSave />} colorScheme="blue">SAVE</Button>
             </HStack>
         </DrawerBody>
