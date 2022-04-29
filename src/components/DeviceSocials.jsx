@@ -9,7 +9,7 @@ const DeviceSocials = ({socials}) => {
                     {socials.map(social => {
                         if(social.is_public && social.type == 'video') {
                             return (
-                                <iframe src={sanitizeVideo(social.url)} style={{width:'100%', height:'200px', borderRadius: '10px'}}/>
+                                <iframe key={social.id} src={sanitizeVideo(social.url)} style={{width:'100%', height:'200px', borderRadius: '10px'}}/>
                             )
                         }
                     })}
@@ -18,7 +18,7 @@ const DeviceSocials = ({socials}) => {
 
                 {socials.map(social => {
                     if(social.type != 'video') {
-                        return <SocialIcon key={social.id} social={social} />
+                        return <SocialIcon key={social.id} social={social}/>
                     }
                 })}
 

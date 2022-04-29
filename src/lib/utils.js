@@ -322,7 +322,8 @@ export const sanitizeVideo = (url) => {
         sanitizedUrl = `https:/player.vimeo.com/video/${link}`
     } else if (url.includes('youtu') && !url.includes('embed')) {
         if(url.includes('watch')) {
-            let link = url.split('https://www.youtube.com/watch?v=')[1]
+            let link = url.split('youtube.com/watch?v=')[1]
+            link = link.split('&')[0]
             sanitizedUrl = `https://www.youtube.com/embed/${link}`
          } else {
              let link = url.split('https://youtu.be/')[1]

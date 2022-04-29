@@ -30,7 +30,7 @@ const DeviceCTA = ({deviceData, socialsData}) => {
                     myVCard.addEmail(social.url)
                 }
                 if(social.provider == 'website') {
-                    myVCard.addUrl(social.url)
+                    myVCard.addURL(social.url)
                 }
                 if(social.provider == 'phone') {
                     myVCard.addPhoneNumber(social.url)
