@@ -167,7 +167,7 @@ const Register = () => {
                   flex="1"
                   isLoading={loading}
                 >
-                  Sign Up
+                Register with TapApp
                 </Button>
                
               </HStack>
