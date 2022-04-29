@@ -32,7 +32,7 @@ const VideoEmbedEdit = ({videoData}) => {
     },[videoState])
 
     return (
-        <Box p="10px" bg="gray.50" borderRadius="lg">
+        <Box p="10px" bg="gray.50" borderRadius="lg" border="1px" borderColor="gray.300">
             <Text mb="10px">Embed Video</Text>
             {videoUrl && videoUrl != '' && <iframe src={videoUrl} style={{width:'100%', height: '200px', borderRadius: '10px', marginBottom:'10px'}}/> }
             <FormControl mb="20px">
