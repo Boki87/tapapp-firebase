@@ -4,7 +4,7 @@ import { sanitizeVideo } from '../lib/utils'
 
 const DeviceSocials = ({socials}) => {
 
-    return <Box>
+    return <Box mb="50px">
                 <Box mb="10px" p="10px" maxW="md" mx="auto">
                     {socials.map(social => {
                         if(social.is_public && social.type == 'video') {
