@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { getDeviceData, getSocialsForDevice } from "../lib/firebase";
+import {
+  getDeviceData,
+  getSocialsForDevice,
+  addDeviceVisitEntry,
+} from "../lib/firebase";
 import {
   Button,
   Text,
@@ -33,6 +37,19 @@ const Device = () => {
       let isRegistered = await checkIfDeviceIsRegistered(id);
       if (isRegistered) {
         let deviceRes = await getDeviceData(id);
+        //add visit entry
+        if (user && user?.uid !== deviceRes.user_id) {
+          //add entry
+          await addDeviceVisitEntry(deviceRes.id, deviceRes.user_id);
+          console.log("add visit entry");
+        }
+
+        if (!user) {
+          console.log("add device visit");
+          console.log(deviceRes);
+          await addDeviceVisitEntry(deviceRes.id, deviceRes.user_id);
+        }
+
         await setDeviceData(deviceRes);
         let socials = await getSocialsForDevice(id, deviceRes.user_id);
         setSocialsData(socials);

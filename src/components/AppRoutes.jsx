@@ -7,6 +7,10 @@ import Register from "./Register";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import EditDevice from "./EditDevice";
+import FAQ from "./FAQ";
+import TermsAndConditions from "./TermsAndConditions";
+import ContactUs from "./ContactUs";
+
 import BottomNav from "./BottomNav";
 import BurgerMenu from "./BurgerMenu";
 
@@ -20,6 +24,9 @@ const AppRoutes = () => {
         <Route path="/signup/:id" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/d/:id" element={<Device />} />
         <Route path="/edit/:id" element={<EditDevice />} />
         <Route path="*" element={<Navigate to="/" />} />

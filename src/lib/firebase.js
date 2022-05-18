@@ -1,7 +1,7 @@
 import { toast } from '@chakra-ui/react'
 import { initializeApp } from 'firebase/app'
 import { getAuth, signOut, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import {getFirestore, doc, addDoc, getDoc, collection, getDocs, deleteDoc, setDoc,query, where} from 'firebase/firestore'
+import {getFirestore, doc, addDoc, getDoc, collection, getDocs, deleteDoc, setDoc,query, where, serverTimestamp} from 'firebase/firestore'
 import {ref, uploadBytes, getDownloadURL, getStorage} from 'firebase/storage'
 
 const firebaseConfig = {
@@ -195,6 +195,17 @@ const deleteSocial = async (id) => {
   await deleteDoc(socialRef)
 }
 
+//device visits functions
+
+const addDeviceVisitEntry = async (deviceId, userId) => {
+  
+  let newDeviceVisit = await addDoc(collection(db, 'device_visits'), {
+    device_link_id: deviceId,
+    user_id: userId,
+    timestamp: serverTimestamp(),
+    //timestamp: +new Date() 
+  })
+}
 
 export {
     signMeOut,
@@ -212,5 +223,6 @@ export {
     uploadAvatar,
     updateSocial,
     addSocial,
-    deleteSocial
+  deleteSocial,
+addDeviceVisitEntry
 }

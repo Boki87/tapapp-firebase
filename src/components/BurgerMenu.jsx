@@ -5,9 +5,12 @@ import { useMainMenuContext } from "../context";
 import { useAuthContext } from "../context";
 import { useNavigate, Link } from "react-router-dom";
 
-import {BiUser } from 'react-icons/bi'
-import {RiHomeLine} from 'react-icons/ri'
+import { BiUser } from "react-icons/bi";
+import { RiHomeLine } from "react-icons/ri";
 import { issuedAtTime } from "@firebase/util";
+import { FaQuestion } from "react-icons/fa";
+import { HiOutlineDocumentText } from "react-icons/hi";
+import { MdContactPhone } from "react-icons/md";
 
 export const BurgerMenuButton = () => {
   const { toggleMainMenu } = useMainMenuContext();
@@ -67,35 +70,39 @@ export const BurgerMenuBar = ({ children }) => {
   );
 };
 
-
-
-function BurgerItemButton({icon, children, title, to}) {
-
+function BurgerItemButton({ icon, children, title, to }) {
   const navigate = useNavigate();
   const { toggleMainMenu } = useMainMenuContext();
 
   const handleClick = () => {
     navigate(to);
     toggleMainMenu();
-  }
+  };
 
   return (
-    <Box onClick={handleClick} w="full" h="50px" bg="gray.100" cursor="pointer" color="gray.600" display="flex" alignItems="center" px="10px" mb="10px" _hover={{bg:'gray.200'}} borderRadius="md">
-      <Box mr="10px">
-        {icon}
-      </Box>
-      <Text fontSize="lg">
-        {title}
-      </Text>
+    <Box
+      onClick={handleClick}
+      w="full"
+      h="50px"
+      bg="gray.100"
+      cursor="pointer"
+      color="gray.600"
+      display="flex"
+      alignItems="center"
+      px="10px"
+      mb="10px"
+      _hover={{ bg: "gray.200" }}
+      borderRadius="md"
+    >
+      <Box mr="10px">{icon}</Box>
+      <Text fontSize="lg">{title}</Text>
     </Box>
-  )
+  );
 }
-
-
 
 export default function BurgerMenu() {
   //const [showMenu, setShowMenu] = useState(false);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const { logOut, user } = useAuthContext();
   const { showMainMenu, toggleMainMenu } = useMainMenuContext();
 
@@ -109,20 +116,33 @@ export default function BurgerMenu() {
     toggleMainMenu();
   }
 
-
   const menuItems = [
-
     {
       icon: <RiHomeLine />,
-      to: '/',
-      title: 'Home'
+      to: "/",
+      title: "Home",
     },
     {
       icon: <BiUser />,
-      to: '/profile',
-      title: 'Profile'
+      to: "/profile",
+      title: "Profile",
     },
-  ]
+    {
+      icon: <FaQuestion />,
+      to: "/faq",
+      title: "FAQ",
+    },
+    {
+      icon: <HiOutlineDocumentText />,
+      to: "/terms",
+      title: "Terms & Conditions",
+    },
+    {
+      icon: <MdContactPhone />,
+      to: "/contact-us",
+      title: "Contact Us",
+    },
+  ];
 
   return (
     <>
@@ -154,12 +174,17 @@ export default function BurgerMenu() {
             >
               <CgClose />
             </Button>
-
-
           </Box>
           <Box px="20px">
             {menuItems.map((item) => {
-              return (<BurgerItemButton key={item.to} icon={item.icon} to={item.to} title={item.title}/>)
+              return (
+                <BurgerItemButton
+                  key={item.to}
+                  icon={item.icon}
+                  to={item.to}
+                  title={item.title}
+                />
+              );
             })}
           </Box>
           <Box

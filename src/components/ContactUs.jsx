@@ -1,13 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { BurgerMenuBar } from "./BurgerMenu";
-
-const Profile = () => {
+const ContactUs = () => {
   return (
     <Box h="full" overflow="auto" pt="60px" bg="gray.50" px="20px" pb="100px">
       <BurgerMenuBar />
-      Profile
+      Contact Us
     </Box>
   );
 };
 
-export default Profile;
+export default ContactUs;

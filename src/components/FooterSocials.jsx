@@ -54,6 +54,7 @@ const FooterSocials = () => {
               transition="0.3s all easein-out"
               cursor="pointer"
               _hover={{ bg: "white", color: "black" }}
+              key={social.title}
             >
               {social.icon}
             </Box>
