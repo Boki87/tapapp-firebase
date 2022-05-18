@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { Button, Box, Image } from "@chakra-ui/react";
+import { Button, Box, Image, Text } from "@chakra-ui/react";
 import { CgMenuRight, CgClose } from "react-icons/cg";
 import { useMainMenuContext } from "../context";
 import { useAuthContext } from "../context";
 import { useNavigate, Link } from "react-router-dom";
+
+import {BiUser } from 'react-icons/bi'
+import {RiHomeLine} from 'react-icons/ri'
+import { issuedAtTime } from "@firebase/util";
 
 export const BurgerMenuButton = () => {
   const { toggleMainMenu } = useMainMenuContext();
@@ -63,6 +67,32 @@ export const BurgerMenuBar = ({ children }) => {
   );
 };
 
+
+
+function BurgerItemButton({icon, children, title, to}) {
+
+  const navigate = useNavigate();
+  const { toggleMainMenu } = useMainMenuContext();
+
+  const handleClick = () => {
+    navigate(to);
+    toggleMainMenu();
+  }
+
+  return (
+    <Box onClick={handleClick} w="full" h="50px" bg="gray.100" cursor="pointer" color="gray.600" display="flex" alignItems="center" px="10px" mb="10px" _hover={{bg:'gray.200'}} borderRadius="md">
+      <Box mr="10px">
+        {icon}
+      </Box>
+      <Text fontSize="lg">
+        {title}
+      </Text>
+    </Box>
+  )
+}
+
+
+
 export default function BurgerMenu() {
   //const [showMenu, setShowMenu] = useState(false);
   let navigate = useNavigate()
@@ -78,6 +108,21 @@ export default function BurgerMenu() {
     navigate("/login");
     toggleMainMenu();
   }
+
+
+  const menuItems = [
+
+    {
+      icon: <RiHomeLine />,
+      to: '/',
+      title: 'Home'
+    },
+    {
+      icon: <BiUser />,
+      to: '/profile',
+      title: 'Profile'
+    },
+  ]
 
   return (
     <>
@@ -109,6 +154,13 @@ export default function BurgerMenu() {
             >
               <CgClose />
             </Button>
+
+
+          </Box>
+          <Box px="20px">
+            {menuItems.map((item) => {
+              return (<BurgerItemButton key={item.to} icon={item.icon} to={item.to} title={item.title}/>)
+            })}
           </Box>
           <Box
             display="flex"
