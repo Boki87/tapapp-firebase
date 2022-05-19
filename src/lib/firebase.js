@@ -1,8 +1,27 @@
-import { toast } from '@chakra-ui/react'
-import { initializeApp } from 'firebase/app'
-import { getAuth, signOut, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import {getFirestore, doc, addDoc, getDoc, collection, getDocs, deleteDoc, setDoc,query, where, serverTimestamp} from 'firebase/firestore'
-import {ref, uploadBytes, getDownloadURL, getStorage} from 'firebase/storage'
+import { toast } from "@chakra-ui/react";
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  addDoc,
+  getDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+  setDoc,
+  query,
+  where,
+  serverTimestamp,
+} from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYGm8vhfc9ape8U5Tei_KLKM2Uu61kSgI",
@@ -11,218 +30,222 @@ const firebaseConfig = {
   storageBucket: "tap-app-bc5ba.appspot.com",
   messagingSenderId: "541187872613",
   appId: "1:541187872613:web:dbc37b36f04ee96f17338c",
-  measurementId: "G-T6V9S2Y70J"
-  }
+  measurementId: "G-T6V9S2Y70J",
+};
 
-  //Initialize Firebase
+//Initialize Firebase
 
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
-const provider = new GoogleAuthProvider()
-const storage = getStorage(app)
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+const storage = getStorage(app);
 
-
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 //auth functions
-const signInWithGoogle = () => signInWithPopup(auth, provider)
+const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 const signIn = async (email, password) => {
-  return await signInWithEmailAndPassword(auth, email, password)
-}
+  return await signInWithEmailAndPassword(auth, email, password);
+};
 
 const signUp = async (email, password) => {
   try {
     //register user
-    let {user} = await createUserWithEmailAndPassword(auth, email, password)
-
-  }catch(err) {
-    console.log(err)
+    let { user } = await createUserWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const signMeOut = () => {
-    signOut(auth)
+  signOut(auth);
+};
+
+const registerUserWithDevice = async (email, password, code, deviceId) => {
+  const deviceRef = doc(db, "device_links", deviceId);
+  let device = await getDoc(deviceRef);
+  if (!device.exists()) {
+    return { error: "Device does not exist" };
+  }
+  //    console.log(device.data());
+  if (device.data().code != code) {
+    return { error: "Invalid code" };
   }
 
+  //check if user is already registered
+  let userProfileCheck = await getDocs(
+    query(collection(db, "user_profiles"), where("email", "==", email))
+  );
+  let userProfileCheckData = [];
+  userProfileCheck.forEach((user) => {
+    userProfileCheckData.push({ uid: user.data().user_id, ...user.data() });
+  });
 
-  const registerUserWithDevice = async (email, password, code, deviceId) => {
-        const deviceRef = doc(db, 'device_links', deviceId)
-       let device = await getDoc(deviceRef) 
-       if(!device.exists()) {
-           return {error: 'Device does not exist'}
-       }
-    //    console.log(device.data());
-       if(device.data().code != code) {
-              return {error: 'Invalid code'}
-       }
-
-       //check if user is already registered
-         let userProfileCheck = await getDocs(query(collection(db, 'user_profiles'), where('email', '==', email)))
-            let userProfileCheckData = [] 
-           userProfileCheck.forEach(user => {
-               userProfileCheckData.push({uid: user.data().user_id, ...user.data()})
-           })
-
-
-        if(userProfileCheckData.length > 0) {
-            var user = userProfileCheckData[0] 
-        } else {
-            //register new user
-            var {user} = await createUserWithEmailAndPassword(auth, email, password)
-            //create new doc in user_profiles collection
-            let userProfile = await addDoc(collection(db, 'user_profiles'), {
-                    user_id: user.uid,
-                    email: email,
-                    name: '',
-                    avatar: ''
-            })
-        }
-
-       //update device links with user id
-       await setDoc(deviceRef, {user_id: user.uid, date_registered_at: +new Date()}, {merge: true})
-     
-       return {success: 'Successfully registered', error: false}
+  if (userProfileCheckData.length > 0) {
+    var user = userProfileCheckData[0];
+  } else {
+    //register new user
+    var { user } = await createUserWithEmailAndPassword(auth, email, password);
+    //create new doc in user_profiles collection
+    let userProfile = await addDoc(collection(db, "user_profiles"), {
+      user_id: user.uid,
+      email: email,
+      name: "",
+      avatar: "",
+    });
   }
 
+  //update device links with user id
+  await setDoc(
+    deviceRef,
+    { user_id: user.uid, date_registered_at: +new Date() },
+    { merge: true }
+  );
+
+  return { success: "Successfully registered", error: false };
+};
 
 const isDeviceRegistered = async (deviceId) => {
-    
-       let device = await getDoc(doc(db, 'device_links',deviceId)) 
-       if(device.exists()) {
-            if(device.data().user_id != '') {
-                return true
-            }else {
-                return false
-            }
-       }else {
-        throw new Error('Device does not exist')
-       }
-    
-}
-
+  let device = await getDoc(doc(db, "device_links", deviceId));
+  if (device.exists()) {
+    if (device.data().user_id != "") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw new Error("Device does not exist");
+  }
+};
 
 //device specific functions
 
 const getDevicesForUser = async (userId) => {
-    let devices = await getDocs(query(collection(db, 'device_links'), where('user_id', '==', userId)))
-    let devicesData = []
-    for(let i = 0; i < devices.size; i++) {
-        let d = devices.docs[i];
-        //get device type for device
-        let deviceType = await getDoc(doc(db, 'device_types', d.data().device_type_id))
+  let devices = await getDocs(
+    query(collection(db, "device_links"), where("user_id", "==", userId))
+  );
+  let devicesData = [];
+  for (let i = 0; i < devices.size; i++) {
+    let d = devices.docs[i];
+    //get device type for device
+    let deviceType = await getDoc(
+      doc(db, "device_types", d.data().device_type_id)
+    );
 
-        let deviceTypeData = {id: deviceType.id, ...deviceType.data()}
-            
-        devicesData.push({id: d.id,device_type: deviceTypeData, ...d.data()})
-    }
-    return devicesData
-}
+    let deviceTypeData = { id: deviceType.id, ...deviceType.data() };
+
+    devicesData.push({ id: d.id, device_type: deviceTypeData, ...d.data() });
+  }
+  return devicesData;
+};
 
 const getDeviceData = async (id) => {
-  let deviceDataRef = doc(db, 'device_links', id)
-  let deviceData = await getDoc(deviceDataRef)
+  let deviceDataRef = doc(db, "device_links", id);
+  let deviceData = await getDoc(deviceDataRef);
 
   //get device type for device
-  let deviceType = await getDoc(doc(db, 'device_types', deviceData.data().device_type_id))
-  let deviceTypeData = {id: deviceType.id, ...deviceType.data()}
+  let deviceType = await getDoc(
+    doc(db, "device_types", deviceData.data().device_type_id)
+  );
+  let deviceTypeData = { id: deviceType.id, ...deviceType.data() };
 
-  return {id: deviceData.id, device_type: deviceTypeData, ...deviceData.data()}
-}
+  return {
+    id: deviceData.id,
+    device_type: deviceTypeData,
+    ...deviceData.data(),
+  };
+};
 
 const getSocialsForDevice = async (deviceId, userId) => {
   // console.log(deviceId, userId)
-  const socialsRef = collection(db, 'socials')
-  const q = query(socialsRef, where('device_link_id', '==', deviceId))
-  const querySnapshot = await getDocs(q)
-  let socials = []
-  querySnapshot.forEach(doc => {
-    socials.push({id: doc.id, ...doc.data()})
-  })
+  const socialsRef = collection(db, "socials");
+  const q = query(socialsRef, where("device_link_id", "==", deviceId));
+  const querySnapshot = await getDocs(q);
+  let socials = [];
+  querySnapshot.forEach((doc) => {
+    socials.push({ id: doc.id, ...doc.data() });
+  });
 
-  return socials
-}
-
+  return socials;
+};
 
 const updateDeviceData = async (id, data) => {
-  if(!data) {
-    return
+  if (!data) {
+    return;
   }
   try {
-    let deviceDataRef = doc(db, 'device_links', id)
-    if(!data?.is_edited) {
-      data.is_edited = true
+    let deviceDataRef = doc(db, "device_links", id);
+    if (!data?.is_edited) {
+      data.is_edited = true;
     }
-    let {device_type, ...rest} = data
-    let updatedDevice = await setDoc(deviceDataRef, rest, {merge: true})
-  }catch(err) {
+    let { device_type, ...rest } = data;
+    let updatedDevice = await setDoc(deviceDataRef, rest, { merge: true });
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
 const uploadAvatar = async (file, deviceLinkId) => {
   // console.log(file, deviceLinkId)
-  if(!file) return
-  if(file.type.split('/')[0] !== 'image') {
-    throw new Error('Invalid file type')
+  if (!file) return;
+  if (file.type.split("/")[0] !== "image") {
+    throw new Error("Invalid file type");
   }
-  let ext = "." + file.name.split('.').pop()
-  const avatarRef = ref(storage, `avatars/${deviceLinkId + ext}`)
-  const uploadSnapshot = await uploadBytes(avatarRef, file)
-  let uploadUrl = getDownloadURL(uploadSnapshot.ref)
-  return uploadUrl
-
-}
+  let ext = "." + file.name.split(".").pop();
+  const avatarRef = ref(storage, `avatars/${deviceLinkId + ext}`);
+  const uploadSnapshot = await uploadBytes(avatarRef, file);
+  let uploadUrl = getDownloadURL(uploadSnapshot.ref);
+  return uploadUrl;
+};
 
 //socials functions
 
 const updateSocial = async (id, obj) => {
-  let socialRef = doc(db, 'socials', id)
-  let {social_type_id, ...rest} = obj
-  let updatedSocial = await setDoc(socialRef, rest, {merge: true})
-}
-
+  let socialRef = doc(db, "socials", id);
+  let { social_type_id, ...rest } = obj;
+  let updatedSocial = await setDoc(socialRef, rest, { merge: true });
+};
 
 const addSocial = async (obj) => {
-  let newSocial = await addDoc(collection(db, 'socials'), obj)
-  let newSocialRef = doc(db, 'socials', newSocial.id)
-  let newSocialData = await getDoc(newSocialRef)
-  return {id: newSocialData.id, ...newSocialData.data()}
-}
+  let newSocial = await addDoc(collection(db, "socials"), obj);
+  let newSocialRef = doc(db, "socials", newSocial.id);
+  let newSocialData = await getDoc(newSocialRef);
+  return { id: newSocialData.id, ...newSocialData.data() };
+};
 
 const deleteSocial = async (id) => {
-  let socialRef = doc(db, 'socials', id)
-  await deleteDoc(socialRef)
-}
+  let socialRef = doc(db, "socials", id);
+  await deleteDoc(socialRef);
+};
 
 //device visits functions
 
 const addDeviceVisitEntry = async (deviceId, userId) => {
-  
-  let newDeviceVisit = await addDoc(collection(db, 'device_visits'), {
+  let newDeviceVisit = await addDoc(collection(db, "device_visits"), {
     device_link_id: deviceId,
     user_id: userId,
     timestamp: serverTimestamp(),
-    //timestamp: +new Date() 
-  })
-}
+    //timestamp: +new Date()
+  });
+};
 
 export {
-    signMeOut,
-    signIn,
-    signUp,
-    signInWithGoogle,
-    db,
-    auth,
-    isDeviceRegistered,
-    registerUserWithDevice,
-    getDevicesForUser,
-    getDeviceData,
-    getSocialsForDevice,
-    updateDeviceData,
-    uploadAvatar,
-    updateSocial,
-    addSocial,
+  signMeOut,
+  signIn,
+  signUp,
+  signInWithGoogle,
+  db,
+  auth,
+  isDeviceRegistered,
+  registerUserWithDevice,
+  getDevicesForUser,
+  getDeviceData,
+  getSocialsForDevice,
+  updateDeviceData,
+  uploadAvatar,
+  updateSocial,
+  addSocial,
   deleteSocial,
-addDeviceVisitEntry
-}
+  addDeviceVisitEntry,
+};

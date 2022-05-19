@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-    Image,
+  Image,
   useToast,
   Text,
   HStack,
@@ -15,79 +15,116 @@ import {
   chakra,
   Box,
   FormControl,
-  InputRightElement
+  InputRightElement,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { BsGoogle } from 'react-icons/bs'
-import { signUp, registerUserWithDevice } from '../lib/firebase'
+import { BsGoogle } from "react-icons/bs";
+import {
+  signUp,
+  registerUserWithDevice,
+  isDeviceRegistered,
+} from "../lib/firebase";
 
-import { useAuthContext, useDevicesContext } from '../context';
+import { useAuthContext, useDevicesContext } from "../context";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
-  
-
 const Register = () => {
+  const { user } = useAuthContext();
+  const { getDevices } = useDevicesContext();
 
-  const {user} = useAuthContext()
-  const {getDevices} = useDevicesContext()
-
-  const [loading, setLoading] = useState(false)
+  const [deviceChecking, setDeviceChecking] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  let navigate = useNavigate()
-  const {id} = useParams()
+  let navigate = useNavigate();
+  const { id } = useParams();
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
-    const [formState, setFormState] = useState({
-        email: '',
-        password: '',
-        code: ''
-    })
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    code: "",
+  });
 
-  const toast = useToast()
+  const toast = useToast();
 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function checkIfRegistered() {
     try {
-      setLoading(true)
-      let res = await registerUserWithDevice(formState.email, formState.password, formState.code, id)
-      // console.log(res)
-      setLoading(false)
-      if(res.success) {
-        if(user) {
-          await getDevices(user.uid)
-        }
-        navigate('/')
-      }else {
-        toast({
-            title: 'Warning!',
-            description: res.error,
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-        })
+      setDeviceChecking(true);
+      let isDeviceRegisteredVal = await isDeviceRegistered(id);
+      console.log(isDeviceRegisteredVal);
+      setDeviceChecking(false);
+      if (isDeviceRegisteredVal) {
+        navigate("/");
       }
     } catch (err) {
-      console.log(err)
-      setLoading(false)
-      toast({
-        title: 'Warning!',
-        description: "Something went wrong",
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      })
+      setDeviceChecking(false);
+      console.log(err);
     }
   }
 
+  useEffect(() => {
+    checkIfRegistered();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      let res = await registerUserWithDevice(
+        formState.email,
+        formState.password,
+        formState.code,
+        id
+      );
+      // console.log(res)
+      setLoading(false);
+      if (res.success) {
+        if (user) {
+          await getDevices(user.uid);
+        }
+        navigate("/");
+      } else {
+        toast({
+          title: "Warning!",
+          description: res.error,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast({
+        title: "Warning!",
+        description: "Something went wrong",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
   const inputChangeHandler = (e) => {
     setFormState({
-        ...formState,
-        [e.target.name]: e.target.value
-    })
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  if (deviceChecking) {
+    return (
+      <Box h="full" w="full">
+        <Center h="full" w="full">
+          <Spinner />
+        </Center>
+      </Box>
+    );
   }
 
   return (
@@ -114,17 +151,24 @@ const Register = () => {
               boxShadow="md"
               rounded="md"
             >
-                <Box textAlign={'center'}>
-                    <Image src="" />
-                    <Heading color="gray.600">Tapp App</Heading>
-                </Box>
+              <Box textAlign={"center"}>
+                <Image src="" />
+                <Heading color="gray.600">Tapp App</Heading>
+              </Box>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input value={formState.email} required name="email" onInput={inputChangeHandler} type="email" placeholder="email address" />
+                  <Input
+                    value={formState.email}
+                    required
+                    name="email"
+                    onInput={inputChangeHandler}
+                    type="email"
+                    placeholder="email address"
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -133,7 +177,14 @@ const Register = () => {
                     pointerEvents="none"
                     children={<CFaLock color="gray.300" />}
                   />
-                  <Input value={formState.code} required name="code" onInput={inputChangeHandler} type="text" placeholder="DEVICE CODE" />
+                  <Input
+                    value={formState.code}
+                    required
+                    name="code"
+                    onInput={inputChangeHandler}
+                    type="text"
+                    placeholder="DEVICE CODE"
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -157,7 +208,6 @@ const Register = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-           
               </FormControl>
               <HStack>
                 <Button
@@ -167,11 +217,10 @@ const Register = () => {
                   flex="1"
                   isLoading={loading}
                 >
-                Register with TapApp
+                  Register with TapApp
                 </Button>
-               
               </HStack>
-                {/* <Box display={'flex'} justifyContent="space-between" flexWrap="wrap">
+              {/* <Box display={'flex'} justifyContent="space-between" flexWrap="wrap">
                     <Text color="blue.500" fontSize="sm" _hover={{ textDecoration: 'underline' }} as="span">
                         <Link to="/resend-confirmation">
                             Didn't receive confirmation email?
@@ -187,10 +236,8 @@ const Register = () => {
           </form>
         </Box>
       </Stack>
-      
     </Flex>
-  )
-}
+  );
+};
 
-
-export default Register
+export default Register;

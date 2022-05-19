@@ -121,26 +121,31 @@ export default function BurgerMenu() {
       icon: <RiHomeLine />,
       to: "/",
       title: "Home",
+      isPrivate: true,
     },
     {
       icon: <BiUser />,
       to: "/profile",
       title: "Profile",
+      isPrivate: true,
     },
     {
       icon: <FaQuestion />,
       to: "/faq",
       title: "FAQ",
+      isPrivate: false,
     },
     {
       icon: <HiOutlineDocumentText />,
       to: "/terms",
       title: "Terms & Conditions",
+      isPrivate: false,
     },
     {
       icon: <MdContactPhone />,
       to: "/contact-us",
       title: "Contact Us",
+      isPrivate: false,
     },
   ];
 
@@ -177,14 +182,18 @@ export default function BurgerMenu() {
           </Box>
           <Box px="20px">
             {menuItems.map((item) => {
-              return (
-                <BurgerItemButton
-                  key={item.to}
-                  icon={item.icon}
-                  to={item.to}
-                  title={item.title}
-                />
-              );
+              if (item.isPrivate && !user) {
+                return null;
+              } else {
+                return (
+                  <BurgerItemButton
+                    key={item.to}
+                    icon={item.icon}
+                    to={item.to}
+                    title={item.title}
+                  />
+                );
+              }
             })}
           </Box>
           <Box
