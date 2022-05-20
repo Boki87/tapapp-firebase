@@ -7,6 +7,9 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword
 } from "firebase/auth";
 import {
   getFirestore,
@@ -230,6 +233,44 @@ const addDeviceVisitEntry = async (deviceId, userId) => {
   });
 };
 
+//user profile functions
+
+const getUserProfile = async (userId) => {
+  let userProfile = await getDocs(
+    query(collection(db, "user_profiles"), where("user_id", "==", userId))
+  );
+  let userProfileData = [];
+  userProfile.forEach((user) => {
+    userProfileData.push({ uid: user.id, ...user.data() });
+  });
+  return userProfileData[0];
+};
+
+const updateUserProfile = async (userId, obj) => {
+  let userProfileRef = doc(db, "user_profiles", userId);
+  let {uid, ...rest} = obj
+  let updatedUserProfile = await setDoc(userProfileRef, rest, { merge: true });
+}
+
+const uploadProfileAvatar = async (file, userProfileId) => {
+  // console.log(file, deviceLinkId)
+  if (!file) return;
+  if (file.type.split("/")[0] !== "image") {
+    throw new Error("Invalid file type");
+  }
+  let ext = "." + file.name.split(".").pop();
+  const avatarRef = ref(storage, `profile_avatars/${userProfileId + ext}`);
+  const uploadSnapshot = await uploadBytes(avatarRef, file);
+  let uploadUrl = getDownloadURL(uploadSnapshot.ref);
+  return uploadUrl;
+};
+
+const updateUserPassword = async (userId, email, currPassword, newPassword) => {
+  let credential = EmailAuthProvider.credential(email, currPassword);
+  await reauthenticateWithCredential(auth.currentUser, credential);
+  await updatePassword(auth.currentUser, newPassword);
+}
+
 export {
   signMeOut,
   signIn,
@@ -248,4 +289,8 @@ export {
   addSocial,
   deleteSocial,
   addDeviceVisitEntry,
+  getUserProfile,
+  uploadProfileAvatar,
+  updateUserProfile,
+  updateUserPassword
 };

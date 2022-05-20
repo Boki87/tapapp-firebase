@@ -19,6 +19,7 @@ import DeviceHero from "./DeviceHero";
 import DeviceCTA from "./DeviceCTA";
 import DeviceSocials from "./DeviceSocials";
 import FooterSocials from "./FooterSocials";
+import AppLoading from "./AppLoading";
 import { useAuthContext } from "../context";
 
 const Device = () => {
@@ -66,22 +67,7 @@ const Device = () => {
   }, []);
 
   if (loading) {
-    return (
-      <Center
-        position="absolute"
-        top="0px"
-        left="0px"
-        zIndex={10}
-        w="full"
-        h="full"
-        bg="white"
-      >
-        <Box position="relative">
-          <Spinner position="absolute" top="-20px" right="-10px" />
-          <Image w="200px" src="/assets/images/main-logo.png" h="auto" />
-        </Box>
-      </Center>
-    );
+    return <AppLoading />;
   }
 
   if (!deviceData) {
