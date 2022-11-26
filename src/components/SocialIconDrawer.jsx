@@ -15,7 +15,7 @@ const SocialIconDrawer = ({isOpen, onClose, deviceId}) => {
 
     return (
         <>
-            <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="full" borderRadius="md">
+            <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="md" borderRadius="md">
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton onClick={onClose}/>

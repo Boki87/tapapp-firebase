@@ -42,6 +42,7 @@ const DevicesContextProvider = ({ children }) => {
                 return true
             }
         } catch (err) {
+            console.log(err)
             navigate('/')
             // toast({
             //     title: 'Error!',

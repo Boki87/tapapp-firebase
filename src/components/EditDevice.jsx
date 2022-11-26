@@ -22,7 +22,7 @@ import {
   getDeviceData,
   getSocialsForDevice,
   updateDeviceData,
-  uploadAvatar,
+  uploadImage,
 } from "../lib/firebase";
 import { useAuthContext, useSocialsContext } from "../context";
 import { BsUpload } from "react-icons/bs";
@@ -59,6 +59,9 @@ const EditDevice = () => {
   const debounceName = useDebounce(deviceData?.name, 1000);
   const debounceTitle = useDebounce(deviceData?.title, 1000);
   const debounceDescription = useDebounce(deviceData?.description, 1000);
+  const debouncePhone = useDebounce(deviceData?.phone, 1000);
+  const debounceEmail = useDebounce(deviceData?.email, 1000);
+  const debounceWebsite = useDebounce(deviceData?.website, 1000);
 
   const handleColorChange = (color) => {
     setDeviceData({ ...deviceData, bg_color: color });
@@ -80,6 +83,7 @@ const EditDevice = () => {
   }
 
   function deviceDataPropChange(e) {
+    console.log(e.target.value, e.target.name)
     setDeviceData({ ...deviceData, [e.target.name]: e.target.value });
   }
 
@@ -104,7 +108,7 @@ const EditDevice = () => {
       let compressedAvatar = await compressImage(avatar);
       avatar = compressedAvatar;
 
-      let res = await uploadAvatar(avatar, id);
+      let res = await uploadImage('avatars', avatar, id);
       updateData(id, { avatar: res });
       setDeviceData({ ...deviceData, avatar: res });
 
@@ -122,6 +126,13 @@ const EditDevice = () => {
     }
   }
 
+
+  function handleBgChange(bg) {
+    // console.log(bg)
+    setDeviceData({ ...deviceData, bg_image: bg });
+  }
+
+
   useEffect(() => {
     fetchDeviceData();
   }, [id]);
@@ -129,7 +140,7 @@ const EditDevice = () => {
   useEffect(() => {
     // console.log(deviceData)
     updateData(id, deviceData);
-  }, [debounceName, debounceTitle, debounceDescription]);
+  }, [debounceName, debounceTitle, debounceDescription, debouncePhone, debounceEmail, debounceWebsite]);
 
   useEffect(() => {
     //get embedded video
@@ -165,6 +176,7 @@ const EditDevice = () => {
       >
         <Box position="relative">
           <Spinner position="absolute" top="-20px" right="-10px" />
+          {/* <Text fontSize="2xl" fontWeight="bold">SmartBox</Text> */}
           <Image w="200px" src="/assets/images/main-logo.png" h="auto" />
         </Box>
       </Center>
@@ -195,6 +207,13 @@ const EditDevice = () => {
         position="relative"
         mb="20px"
       >
+
+        {deviceData?.bg_image != '' && <Box position="absolute" left="0px" top="0px" w="full" h="full" borderRadius="2xl" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
+            <Image src={deviceData.bg_image} minW="100%"
+          minH="100%"
+          objectFit="cover" />
+        </Box> }
+
         <Box
           position="absolute"
           px="6px"
@@ -209,11 +228,12 @@ const EditDevice = () => {
         >
           <div>
             <Link to="/">
-              <Image
+            <Text fontSize="2xl" fontWeight="bold">TapApp</Text>
+              {/* <Image
                 src="/assets/images/main-logo-white.png"
                 h="auto"
                 w="90px"
-              />
+              /> */}
             </Link>
           </div>
           <Spacer />
@@ -233,7 +253,7 @@ const EditDevice = () => {
             mr="10px"
             leftIcon={<BsUpload />}
           >
-            Upload avatar
+            Upload logo
           </Button>
           <input
             onChange={handleAvatarChange}
@@ -244,7 +264,9 @@ const EditDevice = () => {
           />
           <ChakraColorPicker
             value={deviceData.bg_color ? deviceData.bg_color : "blue.500"}
+            id={id}
             onChange={handleColorChange}
+            onBgChange={handleBgChange}
           />
         </Box>
       </Box>
@@ -277,6 +299,36 @@ const EditDevice = () => {
             variant="filled"
             name="description"
             value={deviceData.description}
+            onInput={deviceDataPropChange}
+          />
+        </FormControl>
+        <FormControl mb="20px">
+          <FormLabel htmlFor="title">Tel</FormLabel>
+          <Input
+            placeholder="Telephone"
+            variant="filled"
+            name="phone"
+            value={deviceData.phone}
+            onInput={deviceDataPropChange}
+          />
+        </FormControl>
+        <FormControl mb="20px">
+          <FormLabel htmlFor="title">Email</FormLabel>
+          <Input
+            placeholder="Email"
+            variant="filled"
+            name="email"
+            value={deviceData.email}
+            onInput={deviceDataPropChange}
+          />
+        </FormControl>
+        <FormControl mb="20px">
+          <FormLabel htmlFor="title">Website</FormLabel>
+          <Input
+            placeholder="Website"
+            variant="filled"
+            name="website"
+            value={deviceData.website}
             onInput={deviceDataPropChange}
           />
         </FormControl>

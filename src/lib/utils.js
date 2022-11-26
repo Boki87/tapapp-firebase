@@ -11,16 +11,16 @@ export const socials = [
         url: '',
         user_id: ''
     },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'twitter',
-        type: 'social',
-        url: '',
-        user_id: ''
-    },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'twitter',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
     {
         device_link_id: null,
         is_public: true,
@@ -36,7 +36,7 @@ export const socials = [
         is_public: true,
         name: '',
         order: 0,
-        provider: 'youtube',
+        provider: 'invino',
         type: 'social',
         url: '',
         user_id: ''
@@ -46,7 +46,7 @@ export const socials = [
         is_public: true,
         name: '',
         order: 0,
-        provider: 'linkedin',
+        provider: 'yelp',
         type: 'social',
         url: '',
         user_id: ''
@@ -56,7 +56,7 @@ export const socials = [
         is_public: true,
         name: '',
         order: 0,
-        provider: 'github',
+        provider: 'trip-advisor',
         type: 'social',
         url: '',
         user_id: ''
@@ -66,81 +66,121 @@ export const socials = [
         is_public: true,
         name: '',
         order: 0,
-        provider: 'spotify',
+        provider: 'google',
         type: 'social',
         url: '',
         user_id: ''
     },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'tiktok',
-        type: 'social',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'pinterest',
-        type: 'social',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'strava',
-        type: 'social',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'phone',
-        type: 'contact',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'email',
-        type: 'contact',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'website',
-        type: 'contact',
-        url: '',
-        user_id: ''
-    },
-    {
-        device_link_id: null,
-        is_public: true,
-        name: '',
-        order: 0,
-        provider: 'video',
-        type: 'video',
-        url: '',
-        user_id: ''
-    },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'youtube',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'linkedin',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'github',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'spotify',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'tiktok',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'pinterest',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'strava',
+    //     type: 'social',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'phone',
+    //     type: 'contact',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'email',
+    //     type: 'contact',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'website',
+    //     type: 'contact',
+    //     url: '',
+    //     user_id: ''
+    // },
+    // {
+    //     device_link_id: null,
+    //     is_public: true,
+    //     name: '',
+    //     order: 0,
+    //     provider: 'video',
+    //     type: 'video',
+    //     url: '',
+    //     user_id: ''
+    // },
 ]
 
 
@@ -149,47 +189,59 @@ export function getLogoForSocialMedia(socialMedia) {
     let imageSrc = ''
     switch(socialMedia) {
         case 'facebook':
-            imageSrc = '/assets/social-icons/facebook.png'
+            imageSrc = '/assets/social-icons/facebook.jpg'
             break
-        case 'twitter':
-            imageSrc = '/assets/social-icons/twitter.png'
-            break
+        // case 'twitter':
+        //     imageSrc = '/assets/social-icons/twitter.jpg'
+        //     break
         case 'instagram':
-            imageSrc = '/assets/social-icons/instagram.png'
+            imageSrc = '/assets/social-icons/instagram.jpg'
             break
-        case 'youtube':
-            imageSrc = '/assets/social-icons/youtube.png'
+        case 'invino':
+            imageSrc = '/assets/social-icons/invino.jpg'
             break
-        case 'linkedin':
-            imageSrc = '/assets/social-icons/linkedin.png'
+        case 'yelp':
+            imageSrc = '/assets/social-icons/yelp.jpg'
             break
-        case 'github':
-            imageSrc = '/assets/social-icons/github.png'
+        case 'trip-advisor':
+            imageSrc = '/assets/social-icons/trip-advisor.jpg'
             break
-        case 'spotify':
-            imageSrc = '/assets/social-icons/spotify.png'
+        case 'google':
+            imageSrc = '/assets/social-icons/google.jpg'
             break
-        case 'tiktok':
-            imageSrc = '/assets/social-icons/tiktok.png'
-            break
-        case 'pinterest':
-            imageSrc = '/assets/social-icons/pinterest.png'
-            break
-        case 'strava':
-            imageSrc = '/assets/social-icons/strava.png'
-            break
-        case 'phone':
-            imageSrc = '/assets/social-icons/phone.png'
-            break
-        case 'email':
-            imageSrc = '/assets/social-icons/email.png'
-            break
-        case 'website':
-            imageSrc = '/assets/social-icons/website.png'
-            break
-        case 'video':
-            imageSrc = '/assets/social-icons/video.png'
-            break
+        // case 'youtube':
+        //     imageSrc = '/assets/social-icons/youtube.jpg'
+        //     break
+        // case 'linkedin':
+        //     imageSrc = '/assets/social-icons/linkedin.jpg'
+        //     break
+        // case 'github':
+        //     imageSrc = '/assets/social-icons/github.jpg'
+        //     break
+        // case 'spotify':
+        //     imageSrc = '/assets/social-icons/spotify.jpg'
+        //     break
+        // case 'tiktok':
+        //     imageSrc = '/assets/social-icons/tiktok.jpg'
+        //     break
+        // case 'pinterest':
+        //     imageSrc = '/assets/social-icons/pinterest.jpg'
+        //     break
+        // case 'strava':
+        //     imageSrc = '/assets/social-icons/strava.jpg'
+        //     break
+        // case 'phone':
+        //     imageSrc = '/assets/social-icons/phone.jpg'
+        //     break
+        // case 'email':
+        //     imageSrc = '/assets/social-icons/email.jpg'
+        //     break
+        // case 'website':
+        //     imageSrc = '/assets/social-icons/website.jpg'
+        //     break
+        // case 'video':
+        //     imageSrc = '/assets/social-icons/video.jpg'
+        //     break
         default:
             imageSrc = ''
             break

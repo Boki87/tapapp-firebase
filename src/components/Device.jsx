@@ -46,8 +46,8 @@ const Device = () => {
         }
 
         if (!user) {
-          console.log("add device visit");
-          console.log(deviceRes);
+          // console.log("add device visit");
+          // console.log(deviceRes);
           await addDeviceVisitEntry(deviceRes.id, deviceRes.user_id);
         }
 
@@ -102,8 +102,8 @@ const Device = () => {
   return (
     <Box h="full" w="full" overflow="auto">
       <DeviceHero device={deviceData} />
-      <DeviceCTA deviceData={deviceData} socialsData={socialsData} />
       <DeviceSocials socials={socialsData} />
+      <DeviceCTA deviceData={deviceData} socialsData={socialsData} />
       <FooterSocials />
     </Box>
   );

@@ -52,8 +52,8 @@ const SocialIconEditDrawer = ({isOpen, onClose, editSocialId}) => {
         <DrawerBody display="flex" flexDirection="column">
             
 
-            <Box display="flex" justifyContent="center" mb="20px">
-                <Image src={imageSrc}/>
+            <Box display="flex" justifyContent="center" mb="20px" mt="30px">
+                <Image w="140px" src={imageSrc}/>
             </Box>
             <FormControl mb="20px">
                 <FormLabel htmlFor="name">Custom Title</FormLabel>
