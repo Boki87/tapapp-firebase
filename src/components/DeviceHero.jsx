@@ -17,7 +17,7 @@ const DeviceHero = ({device}) => {
 
 
     return (
-        <Box p="2">
+        <Box>
             <Box position="relative">
                 <Box position="absolute" px="6px" pl="15px" top="5px" left="0" w="full" zIndex="2" display="flex" alignItems="center" color="gray.100">
                         <div>
@@ -31,9 +31,9 @@ const DeviceHero = ({device}) => {
                         <BurgerMenuButton color="blackAlpha.700"/>
                 </Box>
 
-                <Box w="full" h="200px" bg={device.bg_color} borderRadius="3xl" position="relative">
+                <Box w="full" h="200px" bg={device.bg_color} borderBottomRadius="3xl" position="relative">
 
-                    {device?.bg_image != '' && <Box position="absolute" left="0px" top="0px" w="full" h="full" borderRadius="3xl" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
+                    {device?.bg_image != '' && <Box position="absolute" left="0px" top="0px" w="full" h="full" borderBottomRadius="3xl" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
                         <Image src={device.bg_image} minW="100%"
                     minH="100%"
                     objectFit="cover" />

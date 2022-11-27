@@ -132,18 +132,18 @@ export default function BurgerMenu() {
       title: "Profile",
       isPrivate: true,
     },
-    {
-      icon: <FaQuestion />,
-      to: "/faq",
-      title: "FAQ",
-      isPrivate: false,
-    },
-    {
-      icon: <HiOutlineDocumentText />,
-      to: "/terms",
-      title: "Terms & Conditions",
-      isPrivate: false,
-    },
+    // {
+    //   icon: <FaQuestion />,
+    //   to: "/faq",
+    //   title: "FAQ",
+    //   isPrivate: false,
+    // },
+    // {
+    //   icon: <HiOutlineDocumentText />,
+    //   to: "/terms",
+    //   title: "Terms & Conditions",
+    //   isPrivate: false,
+    // },
     {
       icon: <MdContactPhone />,
       to: "/contact-us",

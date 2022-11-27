@@ -5,8 +5,7 @@ const SocialIcon = ({ social, onClick, editMode }) => {
   let imageSrc = getLogoForSocialMedia(social.provider);
   let link = getLinkForSocialMedia(social.type, social.provider, social.url);
 
-  let image = <Image src={imageSrc} objectFit="contain" w="100%" h="100%" display="flex" alignItems="center" justifyContent="center" borderRadius=
-"10px" overflow="hidden" />;
+  let image = <Image src={imageSrc} objectFit="contain" w="100%" h="100%" display="flex" alignItems="center" justifyContent="center" overflow="hidden" />;
 
   function openLink() {
     if (onClick) {
@@ -32,7 +31,8 @@ const SocialIcon = ({ social, onClick, editMode }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      borderRadius="full"
+      borderRadius="20px"
+      overflow="hidden"
       shadow="lg"
     >
       {!social.is_public && editMode && (
@@ -41,7 +41,7 @@ const SocialIcon = ({ social, onClick, editMode }) => {
           w="100%"
           h="100%"
           bg="gray.400"
-          borderRadius="10px"
+          borderRadius="20px"
           opacity={0.8}
         ></Box>
       )}
