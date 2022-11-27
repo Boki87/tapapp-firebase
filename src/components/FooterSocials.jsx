@@ -33,7 +33,7 @@ const FooterSocials = () => {
   }
 
   return (
-    <Stack mb="60px">
+    <Stack mb="60px" mt="60px">
       <Text color="gray.400" textAlign="center">
         Follow Us
       </Text>

@@ -12,7 +12,7 @@ import { FaQuestion } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { MdContactPhone } from "react-icons/md";
 
-export const BurgerMenuButton = () => {
+export const BurgerMenuButton = (props) => {
   const { toggleMainMenu } = useMainMenuContext();
   return (
     <Button
@@ -22,6 +22,9 @@ export const BurgerMenuButton = () => {
       rounded="full"
       variant="ghost"
       fontSize="xl"
+      _hover={{bg:"whiteAplha.300"}}
+      _active={{bg:"whiteAlpha.300"}}
+      {...props}
     >
       <CgMenuRight />
     </Button>

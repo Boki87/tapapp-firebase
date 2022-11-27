@@ -22,12 +22,13 @@ const DeviceHero = ({device}) => {
                 <Box position="absolute" px="6px" pl="15px" top="5px" left="0" w="full" zIndex="2" display="flex" alignItems="center" color="gray.100">
                         <div>
                             <Link to='/'>
-                                <Image src="/assets/images/main-logo-white.png" h="auto" w="110px" />
+                                <Text color="blackAlpha.800" fontSize="2rem" fontWeight="bolder">TapApp</Text>
+                                {/* <Image src="/assets/images/main-logo-white.png" h="auto" w="110px" /> */}
                                 {/* <Text fontSize="2xl" fontWeight="bold">SmartBox</Text> */}
                             </Link>
                         </div>
                         <Spacer />
-                        <BurgerMenuButton color="white"/>
+                        <BurgerMenuButton color="blackAlpha.700"/>
                 </Box>
 
                 <Box w="full" h="200px" bg={device.bg_color} borderRadius="3xl" position="relative">
@@ -49,9 +50,9 @@ const DeviceHero = ({device}) => {
                     </Box>}
                 </Box>
                 <Box pt="40px" textAlign="center" mb="15px">
-                    <Text fontSize="2xl" fontWeight="bold" color="gray.700">{device.name}</Text>
-                    <Text color="gray.600" fontSize="sm" mb="10px">{device.title}</Text>
-                    <Text color="gray.600" fontSize="md">{device.description}</Text>
+                    <Text fontSize="2xl" color="gray.700">{device.name}</Text>
+                    <Text color="gray.800" fontSize="4xl" fontWeight="bolder" mb="0px">{device.title}</Text>
+                    <Text color="gray.700" fontSize="2xl">{device.description}</Text>
                 </Box>
             </Box>
         </Box>

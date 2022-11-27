@@ -83,7 +83,7 @@ const EditDevice = () => {
   }
 
   function deviceDataPropChange(e) {
-    console.log(e.target.value, e.target.name)
+    // console.log(e.target.value, e.target.name)
     setDeviceData({ ...deviceData, [e.target.name]: e.target.value });
   }
 
@@ -224,7 +224,7 @@ const EditDevice = () => {
           zIndex="2"
           display="flex"
           alignItems="center"
-          color="gray.100"
+          color="blackAlpha.800"
         >
           <div>
             <Link to="/">
@@ -237,7 +237,7 @@ const EditDevice = () => {
             </Link>
           </div>
           <Spacer />
-          <BurgerMenuButton color="white" />
+          <BurgerMenuButton color="blackAlpha.700" />
         </Box>
         <Avatar
           border="2px solid white"
@@ -273,7 +273,7 @@ const EditDevice = () => {
 
       <Box>
         <FormControl mb="20px">
-          <FormLabel htmlFor="name">Full Name</FormLabel>
+          <FormLabel htmlFor="name">Welcome Title</FormLabel>
           <Input
             placeholder="Full Name"
             variant="filled"
@@ -283,7 +283,7 @@ const EditDevice = () => {
           />
         </FormControl>
         <FormControl mb="20px">
-          <FormLabel htmlFor="title">Title</FormLabel>
+          <FormLabel htmlFor="title">Welcome Title (Strong)</FormLabel>
           <Input
             placeholder="Title"
             variant="filled"
@@ -293,8 +293,8 @@ const EditDevice = () => {
           />
         </FormControl>
         <FormControl mb="20px">
-          <FormLabel htmlFor="description">Description</FormLabel>
-          <Textarea
+          <FormLabel htmlFor="description">Welcome Title 2</FormLabel>
+          <Input
             placeholder="description"
             variant="filled"
             name="description"
