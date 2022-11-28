@@ -25,25 +25,25 @@ const DeviceCTA = ({deviceData, socialsData}) => {
        if(deviceData.email !== "") {
             myVCard.addEmail(deviceData.email)
        }
-       
-        socialsData.forEach(social => {
-            if(social.type == 'social' && social.is_public) {
-                let url = getLinkForSocialMedia(social.type, social.provider, social.url)
-                myVCard.addURL(url)
-            }
 
-            if(social.type != 'social') {
-                if(social.provider == 'email') {
-                    myVCard.addEmail(social.url)
-                }
-                if(social.provider == 'website') {
-                    myVCard.addURL(social.url)
-                }
-                if(social.provider == 'phone') {
-                    myVCard.addPhoneNumber(social.url)
-                }
-            }
-        })
+        // socialsData.forEach(social => {
+        //     if(social.type == 'social' && social.is_public) {
+        //         let url = getLinkForSocialMedia(social.type, social.provider, social.url)
+        //         myVCard.addURL(url)
+        //     }
+
+        //     if(social.type != 'social') {
+        //         if(social.provider == 'email') {
+        //             myVCard.addEmail(social.url)
+        //         }
+        //         if(social.provider == 'website') {
+        //             myVCard.addURL(social.url)
+        //         }
+        //         if(social.provider == 'phone') {
+        //             myVCard.addPhoneNumber(social.url)
+        //         }
+        //     }
+        // })
 
 
 

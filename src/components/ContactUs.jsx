@@ -1,4 +1,4 @@
-import { Box, Stack, Textarea, Text, Button } from "@chakra-ui/react";
+import { Box, Stack, Textarea, Text, Button, Input } from "@chakra-ui/react";
 import { BurgerMenuBar } from "./BurgerMenu";
 import { BiMailSend } from "react-icons/bi";
 import FooterSocials from "./FooterSocials";
@@ -11,6 +11,7 @@ const ContactUs = () => {
         <Text fontSize="2xl" color="gray.700" fontWeight="bold" mb="10px">
           Contact us
         </Text>
+        <Input placeholder="Email:" variant="filled" mb="10px" />
         <Textarea placeholder="Message:" variant="filled" minH="300px" />
         <Button
           rightIcon={<BiMailSend />}
