@@ -17,7 +17,6 @@ let transporter = nodemailer.createTransport({
 exports.sendMail = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         const { email, message } = req.body
-        // console.log(verifyMailer, email, message)
 
         const mailOptions = {
             from: email, // Something like: Jane Doe <janedoe@gmail.com>
