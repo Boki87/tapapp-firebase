@@ -26,30 +26,43 @@ const AppLoading = () => {
     //   </Box>
     // </Center>
 
-    <Box
+    // <Box
+    //   position="absolute"
+    //   top="0px"
+    //   left="0px"
+    //   zIndex={10}
+    //   w="full"
+    //   h="full"
+    //   bgGradient="linear(to-br, blue.300, green.300)"
+    //   display="flex"
+    //   flexDir="column"
+    //   justifyContent="flex-end"
+    // >
+    //   <Box>
+    //     <motion.Center
+    //       transition={{ y: bounceValues }}
+    //       animate={{ y: ["15px", "-18px"] }}
+    //     >
+    //       <Image src={newLogo} maxW="300px" w="90%" />
+    //     </motion.Center>
+    //     <Center mt="40px">
+    //       <Image src={bottomImage} w="100%" />
+    //     </Center>
+    //   </Box>
+    // </Box>
+    <Center
       position="absolute"
       top="0px"
       left="0px"
       zIndex={10}
       w="full"
       h="full"
-      bgGradient="linear(to-br, blue.300, green.300)"
-      display="flex"
-      flexDir="column"
-      justifyContent="flex-end"
+      bg="black"
     >
-      <Box>
-        <motion.Center
-          transition={{ y: bounceValues }}
-          animate={{ y: ["15px", "-18px"] }}
-        >
-          <Image src={newLogo} maxW="300px" w="90%" />
-        </motion.Center>
-        <Center mt="40px">
-          <Image src={bottomImage} w="100%" />
-        </Center>
+      <Box position="relative">
+        <Image w="230px" src={newLogo} h="auto" />
       </Box>
-    </Box>
+    </Center>
   );
 };
 
