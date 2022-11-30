@@ -108,7 +108,7 @@ const EditDevice = () => {
       let compressedAvatar = await compressImage(avatar);
       avatar = compressedAvatar;
 
-      let res = await uploadImage('avatars', avatar, id);
+      let res = await uploadImage("avatars", avatar, id);
       updateData(id, { avatar: res });
       setDeviceData({ ...deviceData, avatar: res });
 
@@ -126,12 +126,10 @@ const EditDevice = () => {
     }
   }
 
-
   function handleBgChange(bg) {
     // console.log(bg)
     setDeviceData({ ...deviceData, bg_image: bg });
   }
-
 
   useEffect(() => {
     fetchDeviceData();
@@ -140,7 +138,14 @@ const EditDevice = () => {
   useEffect(() => {
     // console.log(deviceData)
     updateData(id, deviceData);
-  }, [debounceName, debounceTitle, debounceDescription, debouncePhone, debounceEmail, debounceWebsite]);
+  }, [
+    debounceName,
+    debounceTitle,
+    debounceDescription,
+    debouncePhone,
+    debounceEmail,
+    debounceWebsite,
+  ]);
 
   useEffect(() => {
     //get embedded video
@@ -207,12 +212,27 @@ const EditDevice = () => {
         position="relative"
         mb="20px"
       >
-
-        {deviceData?.bg_image != '' && <Box position="absolute" left="0px" top="0px" w="full" h="full" borderRadius="2xl" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
-            <Image src={deviceData.bg_image} minW="100%"
-          minH="100%"
-          objectFit="cover" />
-        </Box> }
+        {deviceData?.bg_image != "" && (
+          <Box
+            position="absolute"
+            left="0px"
+            top="0px"
+            w="full"
+            h="full"
+            borderRadius="2xl"
+            overflow="hidden"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Image
+              src={deviceData.bg_image}
+              minW="100%"
+              minH="100%"
+              objectFit="cover"
+            />
+          </Box>
+        )}
 
         <Box
           position="absolute"
@@ -228,7 +248,9 @@ const EditDevice = () => {
         >
           <div>
             <Link to="/">
-            <Text fontSize="2xl" fontWeight="bold">TapApp</Text>
+              <Text fontSize="2xl" fontWeight="bold">
+                TapApp
+              </Text>
               {/* <Image
                 src="/assets/images/main-logo-white.png"
                 h="auto"
@@ -334,13 +356,26 @@ const EditDevice = () => {
         </FormControl>
       </Box>
 
+      <Center mb="30px">
+        <Link to={`/d/${deviceData.id}`}>
+          <Button
+            bg="gray.800"
+            color="white"
+            _hover={{ bg: "gray.700" }}
+            _active={{ bg: "gray.900" }}
+          >
+            Save & View
+          </Button>
+        </Link>
+      </Center>
+
       {embeddedVideo && <VideoEmbedEdit videoData={embeddedVideo} />}
       {showExplainer && (
         <Center>
           <Text color="gray.600">Tap on any icon below to edit</Text>
         </Center>
       )}
-      <Box display="flex" flexWrap="wrap" justifyContent="center" pb="70px">
+      <Box display="flex" flexWrap="wrap" justifyContent="center" pb="30px">
         {socials.map((social, index) => {
           if (social.provider != "video") {
             return (
@@ -355,18 +390,16 @@ const EditDevice = () => {
         })}
       </Box>
 
-      <Button
-        rightIcon={<VscAdd />}
-        onClick={() => setIsDrawerOpen(true)}
-        colorScheme="blue"
-        color="white"
-        position="absolute"
-        bottom="20px"
-        right="10px"
-      >
-        Add Social
-      </Button>
-
+      <Center>
+        <Button
+          rightIcon={<VscAdd />}
+          onClick={() => setIsDrawerOpen(true)}
+          colorScheme="blue"
+          color="white"
+        >
+          Add Social
+        </Button>
+      </Center>
       <SocialIconDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

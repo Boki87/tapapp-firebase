@@ -105,7 +105,7 @@ const DeviceHero = ({ device }) => {
             </Box>
           )}
         </Box>
-        <Box pt="40px" textAlign="center" mb="15px">
+        <Box pt="40px" px="30px" textAlign="center" mb="15px">
           <Text fontSize="2xl" color="gray.700">
             {device.name}
           </Text>
