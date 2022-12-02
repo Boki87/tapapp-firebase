@@ -1,6 +1,6 @@
 import { Center, Box, Spinner, Image } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import newLogo from "../assets/images/new-logo.svg";
+import newLogo from "../assets/images/new-logo.png";
 import bottomImage from "../assets/images/loading-bottom-image.svg";
 
 const AppLoading = () => {

@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
-    Image,
+  Center,
+  Image,
   useToast,
   Text,
   HStack,
@@ -16,61 +17,56 @@ import {
   Box,
   FormControl,
   InputRightElement,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { BsGoogle } from 'react-icons/bs'
-import { signInWithGoogle, signIn } from '../lib/firebase'
+import { BsGoogle } from "react-icons/bs";
+import { signInWithGoogle, signIn } from "../lib/firebase";
+import newLogo from "../assets/images/new-logo-dark.png";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 const CBsGoogle = chakra(BsGoogle);
 
-
-
 const Login = () => {
-
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-
-  const toast = useToast()
-
+  const toast = useToast();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setLoading(true)
-      let res = await signIn(email, password)
-      setLoading(false)
+      setLoading(true);
+      let res = await signIn(email, password);
+      setLoading(false);
     } catch (err) {
-      console.log(err)
-      setLoading(false)
+      console.log(err);
+      setLoading(false);
       toast({
-        title: 'Warning!',
+        title: "Warning!",
         description: "Incorrect credentials",
-        status: 'error',
+        status: "error",
         duration: 9000,
         isClosable: true,
-      })
+      });
     }
-  }
+  };
 
   const inputChangeHandler = (e) => {
-    let input = e.target
-    if (input.name == 'email') {
-      setEmail(input.value)
+    let input = e.target;
+    if (input.name == "email") {
+      setEmail(input.value);
     }
 
-    if (input.name == 'password') {
-      setPassword(input.value)
+    if (input.name == "password") {
+      setPassword(input.value);
     }
-  }
+  };
 
   return (
     <Flex
@@ -96,17 +92,23 @@ const Login = () => {
               boxShadow="md"
               rounded="md"
             >
-                <Box textAlign={'center'}>
-                    <Image src="" />
-                    <Heading color="gray.600">Tapp App</Heading>
-                </Box>
+              <Center textAlign={"center"}>
+                <Image src={newLogo} h={["80px", "100px"]} />
+              </Center>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input value={email} required name="email" onInput={inputChangeHandler} type="email" placeholder="email address" />
+                  <Input
+                    value={email}
+                    required
+                    name="email"
+                    onInput={inputChangeHandler}
+                    type="email"
+                    placeholder="email address"
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -130,7 +132,6 @@ const Login = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-           
               </FormControl>
               <HStack>
                 <Button
@@ -142,29 +143,33 @@ const Login = () => {
                 >
                   Login
                 </Button>
-               
               </HStack>
-                <Box display={'flex'} justifyContent="space-between" flexWrap="wrap">
-                    {/* <Text color="blue.500" fontSize="sm" _hover={{ textDecoration: 'underline' }} as="span">
+              <Box
+                display={"flex"}
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                {/* <Text color="blue.500" fontSize="sm" _hover={{ textDecoration: 'underline' }} as="span">
                         <Link to="/resend-confirmation">
                             Didn't receive confirmation email?
                         </Link>
                     </Text> */}
-                    <Spacer />
-                    <Text color="blue.500" fontSize="sm" _hover={{ textDecoration: 'underline' }} as="span">
-                        <Link to="/forgot-password">
-                            Forgot Password? 
-                        </Link>
-                    </Text>
-                </Box>
+                <Spacer />
+                <Text
+                  color="blue.500"
+                  fontSize="sm"
+                  _hover={{ textDecoration: "underline" }}
+                  as="span"
+                >
+                  <Link to="/forgot-password">Forgot Password?</Link>
+                </Text>
+              </Box>
             </Stack>
           </form>
         </Box>
       </Stack>
-      
     </Flex>
-  )
-}
+  );
+};
 
-
-export default Login
+export default Login;

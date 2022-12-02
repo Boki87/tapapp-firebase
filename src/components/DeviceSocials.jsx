@@ -3,6 +3,10 @@ import SocialIcon from "./SocialIcon";
 import { sanitizeVideo } from "../lib/utils";
 
 const DeviceSocials = ({ socials }) => {
+  socials.sort((a, b) => {
+    return a.order - b.order;
+  });
+
   return (
     <Box mb="30px">
       {socials.map((social) => {

@@ -11,22 +11,25 @@ import { issuedAtTime } from "@firebase/util";
 import { FaQuestion } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { MdContactPhone } from "react-icons/md";
+import logoSmall from "../assets/images/logo-small.png";
 
 export const BurgerMenuButton = (props) => {
   const { toggleMainMenu } = useMainMenuContext();
   return (
     <Button
       onClick={toggleMainMenu}
-      size="xl"
+      w="50px"
+      h="50px"
+      color="white"
       padding="10px"
-      rounded="full"
       variant="ghost"
       fontSize="xl"
-      _hover={{bg:"whiteAplha.300"}}
-      _active={{bg:"whiteAlpha.300"}}
+      _hover={{ bgGradient: "linear(to-r,teal.400, green.200)" }}
+      _active={{ bgGradient: "linear(to-r,teal.400, green.200)" }}
+      bgGradient="linear(to-r,teal.400, green.200)"
       {...props}
     >
-      <CgMenuRight />
+      <CgMenuRight style={{ color: "white" }} />
     </Button>
   );
 };
@@ -50,23 +53,24 @@ export const BurgerMenuBar = ({ children }) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        h="50px"
+        h="60px"
         px="10px"
       >
         <Link to="/">
-          <Image src="/assets/images/main-logo.png" h="auto" w="90px" />
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            h="50px"
+            w="50px"
+            borderRadius="8px"
+            bgGradient="linear(to-r,teal.400, green.200)"
+          >
+            <Image src={logoSmall} h="45px" />
+          </Box>
         </Link>
 
-        <Button
-          onClick={toggleMainMenu}
-          size="xl"
-          padding="10px"
-          rounded="full"
-          variant="ghost"
-          fontSize="xl"
-        >
-          <CgMenuRight />
-        </Button>
+        <BurgerMenuButton color="blackAlpha.700" />
       </Box>
       <Box>{children}</Box>
     </Box>

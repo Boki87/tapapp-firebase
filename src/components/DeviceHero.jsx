@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BurgerMenuButton } from "./BurgerMenu";
 import { useAuthContext } from "../context";
 import { FiEdit } from "react-icons/fi";
+import logoSmall from "../assets/images/logo-small.png";
 
 const animationKeyframes = keyframes`
     0% {transform: translateY(30px); opacity: 0; scale: 0.8}
@@ -20,8 +21,8 @@ const DeviceHero = ({ device }) => {
         <Box
           position="absolute"
           px="6px"
-          pl="15px"
-          top="0"
+          pl="10px"
+          top="10px"
           left="0"
           w="full"
           zIndex="2"
@@ -29,15 +30,21 @@ const DeviceHero = ({ device }) => {
           alignItems="center"
           color="gray.100"
         >
-          <div>
-            <Link to="/">
-              <Text color="blackAlpha.900" fontSize="2rem" fontWeight="bolder">
-                TapApp
-              </Text>
-              {/* <Image src="/assets/images/main-logo-white.png" h="auto" w="110px" /> */}
-              {/* <Text fontSize="2xl" fontWeight="bold">SmartBox</Text> */}
-            </Link>
-          </div>
+          <Link to="/">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              h="50px"
+              w="50px"
+              borderRadius="8px"
+              bgGradient="linear(to-r,teal.400, green.200)"
+            >
+              <Image src={logoSmall} h="45px" />
+            </Box>
+            {/* <Image src="/assets/images/main-logo-white.png" h="auto" w="110px" /> */}
+            {/* <Text fontSize="2xl" fontWeight="bold">SmartBox</Text> */}
+          </Link>
           <Spacer />
           <BurgerMenuButton color="blackAlpha.700" />
         </Box>
@@ -106,9 +113,9 @@ const DeviceHero = ({ device }) => {
           )}
         </Box>
         <Box pt="40px" px="30px" textAlign="center" mb="15px">
-          <Text fontSize="2xl" color="gray.700">
+          {/* <Text fontSize="2xl" color="gray.700">
             {device.name}
-          </Text>
+          </Text> */}
           <Text color="gray.800" fontSize="4xl" fontWeight="bolder" mb="0px">
             {device.title}
           </Text>

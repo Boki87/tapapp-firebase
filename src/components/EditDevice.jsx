@@ -34,6 +34,8 @@ import SocialIconDrawer from "./SocialIconDrawer";
 import SocialIconEditDrawer from "./SocialIconEditDrawer";
 import SocialIcon from "./SocialIcon";
 import VideoEmbedEdit from "./VideoEmbedEdit";
+import logoSmall from "../assets/images/logo-small.png";
+import AppLoading from "./AppLoading";
 
 const EditDevice = () => {
   let toast = useToast();
@@ -169,23 +171,7 @@ const EditDevice = () => {
   }
 
   if (loading || !deviceData) {
-    return (
-      <Center
-        position="absolute"
-        top="0px"
-        left="0px"
-        zIndex={10}
-        w="full"
-        h="full"
-        bg="white"
-      >
-        <Box position="relative">
-          <Spinner position="absolute" top="-20px" right="-10px" />
-          {/* <Text fontSize="2xl" fontWeight="bold">SmartBox</Text> */}
-          <Image w="200px" src="/assets/images/main-logo.png" h="auto" />
-        </Box>
-      </Center>
-    );
+    return <AppLoading />;
   }
 
   return (
@@ -237,8 +223,8 @@ const EditDevice = () => {
         <Box
           position="absolute"
           px="6px"
-          pl="15px"
-          top="5px"
+          pl="10px"
+          top="10px"
           left="0"
           w="full"
           zIndex="2"
@@ -248,9 +234,17 @@ const EditDevice = () => {
         >
           <div>
             <Link to="/">
-              <Text fontSize="2xl" fontWeight="bold">
-                TapApp
-              </Text>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                h="50px"
+                w="50px"
+                borderRadius="8px"
+                bgGradient="linear(to-r,teal.400, green.200)"
+              >
+                <Image src={logoSmall} h="45px" />
+              </Box>
               {/* <Image
                 src="/assets/images/main-logo-white.png"
                 h="auto"
@@ -294,7 +288,7 @@ const EditDevice = () => {
       </Box>
 
       <Box>
-        <FormControl mb="20px">
+        {/* <FormControl mb="20px">
           <FormLabel htmlFor="name">Welcome Title</FormLabel>
           <Input
             placeholder="Full Name"
@@ -303,9 +297,9 @@ const EditDevice = () => {
             value={deviceData.name}
             onInput={deviceDataPropChange}
           />
-        </FormControl>
+        </FormControl> */}
         <FormControl mb="20px">
-          <FormLabel htmlFor="title">Welcome Title (Strong)</FormLabel>
+          <FormLabel htmlFor="title">Welcome Title</FormLabel>
           <Input
             placeholder="Title"
             variant="filled"
