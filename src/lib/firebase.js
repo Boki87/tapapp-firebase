@@ -132,11 +132,13 @@ const getDevicesForUser = async (userId) => {
   for (let i = 0; i < devices.size; i++) {
     let d = devices.docs[i];
     //get device type for device
-    let deviceType = await getDoc(
-      doc(db, "device_types", d.data().device_type_id)
-    );
-
-    let deviceTypeData = { id: deviceType.id, ...deviceType.data() };
+      let deviceType = await getDoc(
+        doc(db, "device_types", d.data().device_type_id)
+      );
+      const data = deviceType.data()
+      console.log(deviceType, deviceType.data())
+      
+    let deviceTypeData = { id: deviceType.id, ...data };
 
     devicesData.push({ id: d.id, device_type: deviceTypeData, ...d.data() });
   }

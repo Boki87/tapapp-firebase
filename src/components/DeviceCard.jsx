@@ -2,7 +2,7 @@ import {Link } from 'react-router-dom'
 import { Box, Image } from "@chakra-ui/react";
 import {FiEdit} from 'react-icons/fi'
 
-export default function DeviceCard({ device }) {
+export default function DeviceCard({ device }) {  
   return (
     <Box
       w="full"

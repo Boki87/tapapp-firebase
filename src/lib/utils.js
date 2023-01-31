@@ -71,6 +71,16 @@ export const socials = [
         url: '',
         user_id: ''
     },
+    {
+        device_link_id: null,
+        is_public: true,
+        name: '',
+        order: 0,
+        provider: 'review',
+        type: 'social',
+        url: '',
+        user_id: ''
+    },
     // {
     //     device_link_id: null,
     //     is_public: true,
@@ -208,6 +218,9 @@ export function getLogoForSocialMedia(socialMedia) {
             break
         case 'google':
             imageSrc = '/assets/social-icons/google.jpg'
+            break
+        case 'review':
+            imageSrc = '/assets/social-icons/review.jpg'
             break
         // case 'youtube':
         //     imageSrc = '/assets/social-icons/youtube.jpg'
