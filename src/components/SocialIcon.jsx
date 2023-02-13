@@ -1,4 +1,4 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Center, Image, Text } from "@chakra-ui/react";
 import { getLogoForSocialMedia, getLinkForSocialMedia } from "../lib/utils";
 
 const SocialIcon = ({ social, onClick, editMode }) => {
@@ -57,6 +57,20 @@ const SocialIcon = ({ social, onClick, editMode }) => {
         ></Box>
       )}
       {image}
+      {social.name !== "" && (
+        <Center
+          minH="25px"
+          w="100%"
+          position="absolute"
+          bottom="0px"
+          left="0px"
+          bg="whiteAlpha.800"
+        >
+          <Text textAlign="center" fontSize="sm" fontWeight="bolder">
+            {social.name}
+          </Text>
+        </Center>
+      )}
     </Box>
   );
 };

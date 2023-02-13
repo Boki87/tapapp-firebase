@@ -132,12 +132,12 @@ const getDevicesForUser = async (userId) => {
   for (let i = 0; i < devices.size; i++) {
     let d = devices.docs[i];
     //get device type for device
-      let deviceType = await getDoc(
-        doc(db, "device_types", d.data().device_type_id)
-      );
-      const data = deviceType.data()
-      console.log(deviceType, deviceType.data())
-      
+    let deviceType = await getDoc(
+      doc(db, "device_types", d.data().device_type_id)
+    );
+    const data = deviceType.data()
+    // console.log(deviceType, deviceType.data())
+
     let deviceTypeData = { id: deviceType.id, ...data };
 
     devicesData.push({ id: d.id, device_type: deviceTypeData, ...d.data() });
@@ -257,7 +257,7 @@ const getUserProfile = async (userId) => {
 
 const updateUserProfile = async (userId, obj) => {
   let userProfileRef = doc(db, "user_profiles", userId);
-  let {uid, ...rest} = obj
+  let { uid, ...rest } = obj
   let updatedUserProfile = await setDoc(userProfileRef, rest, { merge: true });
 }
 
