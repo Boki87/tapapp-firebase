@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  HStack,
   Text,
   Input,
   FormControl,
@@ -23,6 +24,7 @@ import {
   getSocialsForDevice,
   updateDeviceData,
   uploadImage,
+  storage,
 } from "../lib/firebase";
 import { useAuthContext, useSocialsContext } from "../context";
 import { BsUpload } from "react-icons/bs";
@@ -36,6 +38,9 @@ import SocialIcon from "./SocialIcon";
 import VideoEmbedEdit from "./VideoEmbedEdit";
 import logoSmall from "../assets/images/logo-small.png";
 import AppLoading from "./AppLoading";
+import { useUploadImages } from "../lib/hooks";
+import { FaTrash, FaUpload } from "react-icons/fa";
+import { deleteObject, ref } from "firebase/storage";
 
 const EditDevice = () => {
   let toast = useToast();
@@ -49,6 +54,46 @@ const EditDevice = () => {
   const [embeddedVideo, setEmbeddedVideo] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+  const { uploadImages, uploading, urls } = useUploadImages();
+
+  async function handleFilesChange(e) {
+    console.log(e.target.files);
+    if (e.target.files.length === 0) return;
+    const uploadedImages = await uploadImages(
+      e.target.files,
+      `gallery/${deviceData.id}`
+    );
+    let oldGallery = [];
+    if (deviceData.gallery) {
+      oldGallery = deviceData.gallery;
+    }
+    let newGallery = [...oldGallery, ...uploadedImages];
+
+    setDeviceData((old) => {
+      return {
+        ...old,
+        gallery: newGallery,
+      };
+    });
+
+    updateData(deviceData.id, { gallery: newGallery });
+  }
+
+  async function deleteGalleryImageHandler(url) {
+    let r = window.confirm("Sure you want to delete this image?");
+    if (!r) return;
+    const imageRef = ref(storage, url);
+    await deleteObject(imageRef);
+    setDeviceData((old) => {
+      return {
+        ...old,
+        gallery: old.gallery.filter((img) => img !== url),
+      };
+    });
+    updateData(deviceData.id, {
+      gallery: deviceData.gallery.filter((img) => img !== url),
+    });
+  }
 
   useEffect(() => {
     if (activeEditLink) {
@@ -309,8 +354,8 @@ const EditDevice = () => {
           />
         </FormControl>
         <FormControl mb="20px">
-          <FormLabel htmlFor="description">Welcome Title 2</FormLabel>
-          <Input
+          <FormLabel htmlFor="description">Description</FormLabel>
+          <Textarea
             placeholder="description"
             variant="filled"
             name="description"
@@ -362,6 +407,71 @@ const EditDevice = () => {
           </Button>
         </Link>
       </Center>
+
+      {deviceData.gallery && deviceData.gallery.length && (
+        <HStack
+          border="1px"
+          borderColor="blue.500"
+          w="full"
+          h="220px"
+          mb="10px"
+          p="5px"
+          borderRadius="lg"
+          overflowY="auto"
+        >
+          {deviceData.gallery.map((img) => (
+            <Box
+              minW="90%"
+              h="full"
+              bg="red.200"
+              mr="5px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              overflow="hidden"
+              borderRadius="lg"
+              key={img}
+              position="relative"
+            >
+              <Button
+                position="absolute"
+                top="3px"
+                right="5px"
+                size="sm"
+                colorScheme="red"
+                onClick={() => deleteGalleryImageHandler(img)}
+              >
+                <FaTrash />
+              </Button>
+              <img
+                src={img}
+                style={{
+                  minWidth: "100%",
+                  minHeight: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
+          ))}
+        </HStack>
+      )}
+
+      <Button
+        as="label"
+        isLoading={uploading}
+        htmlFor="multi-image-upload"
+        rightIcon={<FaUpload />}
+        w="full"
+      >
+        Upload Images
+      </Button>
+      <Input
+        id="multi-image-upload"
+        type="file"
+        multiple
+        display="none"
+        onChange={handleFilesChange}
+      />
 
       {embeddedVideo && <VideoEmbedEdit videoData={embeddedVideo} />}
       {showExplainer && (

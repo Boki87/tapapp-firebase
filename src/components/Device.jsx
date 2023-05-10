@@ -21,6 +21,7 @@ import DeviceSocials from "./DeviceSocials";
 import FooterSocials from "./FooterSocials";
 import AppLoading from "./AppLoading";
 import { useAuthContext } from "../context";
+import Gallery from "./Gallery";
 
 const Device = () => {
   const [loading, setLoading] = useState(false);
@@ -102,6 +103,7 @@ const Device = () => {
   return (
     <Box h="full" w="full" overflow="auto">
       <DeviceHero device={deviceData} />
+      {deviceData.gallery.length > 0 && <Gallery images={deviceData.gallery} />}
       <DeviceSocials socials={socialsData} />
       <DeviceCTA deviceData={deviceData} socialsData={socialsData} />
       <FooterSocials />

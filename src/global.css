@@ -1,0 +1,29 @@
+.my-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px
+}
+
+
+.my-prev {
+    background: #efefef;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 1.4rem;  
+    display: flex;
+    align-items: center;
+   justify-content: center; 
+
+}
+.my-next {
+    background: #efefef;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 1.4rem;  
+    display: flex;
+    align-items: center;
+   justify-content: center; 
+
+}

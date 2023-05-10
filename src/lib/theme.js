@@ -13,7 +13,7 @@ const styles = {
     '#root': {
       h: 'full',
       w: '100%',
-    }
+    },
   })
 }
 

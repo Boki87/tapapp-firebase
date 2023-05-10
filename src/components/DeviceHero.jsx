@@ -119,7 +119,14 @@ const DeviceHero = ({ device }) => {
           <Text color="gray.800" fontSize="4xl" fontWeight="bolder" mb="0px">
             {device.title}
           </Text>
-          <Text color="gray.700" fontSize="2xl">
+          <Text
+            color="gray.700"
+            textAlign="center"
+            maxW="sm"
+            whiteSpace="pre-wrap"
+            fontSize="lg"
+            mx="auto"
+          >
             {device.description}
           </Text>
         </Box>
