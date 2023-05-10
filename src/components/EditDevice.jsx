@@ -423,7 +423,7 @@ const EditDevice = () => {
             <Box
               minW="90%"
               h="full"
-              bg="red.200"
+              bg="gray.200"
               mr="5px"
               display="flex"
               alignItems="center"
@@ -462,6 +462,7 @@ const EditDevice = () => {
         htmlFor="multi-image-upload"
         rightIcon={<FaUpload />}
         w="full"
+        mb="20px"
       >
         Upload Images
       </Button>
