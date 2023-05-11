@@ -103,7 +103,9 @@ const Device = () => {
   return (
     <Box h="full" w="full" overflow="auto">
       <DeviceHero device={deviceData} />
-      {deviceData.gallery.length > 0 && <Gallery images={deviceData.gallery} />}
+      {deviceData.gallery && deviceData.gallery.length > 0 && (
+        <Gallery images={deviceData.gallery} />
+      )}
       <DeviceSocials socials={socialsData} />
       <DeviceCTA deviceData={deviceData} socialsData={socialsData} />
       <FooterSocials />
