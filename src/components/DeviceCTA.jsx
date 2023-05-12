@@ -8,6 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BiMailSend, BiPhoneCall } from "react-icons/bi";
+import { BsWhatsapp } from "react-icons/bs";
 import { getLinkForSocialMedia } from "../lib/utils";
 import VCard from "vcard-creator";
 
@@ -114,6 +115,40 @@ const DeviceCTA = ({ deviceData, socialsData }) => {
               _active={{ bg: "gray.900" }}
             >
               <BiPhoneCall />
+            </Button>
+          </a>
+        </HStack>
+      ) : null}
+
+      {deviceData.whatsapp !== "" ? (
+        <HStack w="full" bg="gray.100" borderRadius="10px" pl="10px">
+          <Text flex={1}>{deviceData.whatsapp}</Text>
+          <a
+            href={`https://api.whatsapp.com/send?phone=${deviceData.whatsapp}`}
+          >
+            <Button
+              bg="green.400"
+              color="white"
+              _hover={{ bg: "green.500" }}
+              _active={{ bg: "green.600" }}
+            >
+              <BsWhatsapp />
+            </Button>
+          </a>
+        </HStack>
+      ) : null}
+
+      {deviceData.viber !== "" ? (
+        <HStack w="full" bg="gray.100" borderRadius="10px" pl="10px">
+          <Text flex={1}>{deviceData.viber}</Text>
+          <a href={`viber://add?number=${deviceData.viber}`}>
+            <Button
+              bg="purple.400"
+              color="white"
+              _hover={{ bg: "purple.500" }}
+              _active={{ bg: "purple.600" }}
+            >
+              <BsWhatsapp />
             </Button>
           </a>
         </HStack>

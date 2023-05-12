@@ -16,6 +16,8 @@ import {
   Progress,
   useToast,
   IconButton,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { useParams, Link } from "react-router-dom";
 import { BurgerMenuBar, BurgerMenuButton } from "./BurgerMenu";
@@ -41,6 +43,8 @@ import AppLoading from "./AppLoading";
 import { useUploadImages } from "../lib/hooks";
 import { FaTrash, FaUpload } from "react-icons/fa";
 import { deleteObject, ref } from "firebase/storage";
+import { BsWhatsapp } from "react-icons/bs";
+import { FaViber } from "react-icons/fa";
 
 const EditDevice = () => {
   let toast = useToast();
@@ -109,6 +113,8 @@ const EditDevice = () => {
   const debouncePhone = useDebounce(deviceData?.phone, 1000);
   const debounceEmail = useDebounce(deviceData?.email, 1000);
   const debounceWebsite = useDebounce(deviceData?.website, 1000);
+  const debounceWhatsapp = useDebounce(deviceData?.whatsapp, 1000);
+  const debounceViber = useDebounce(deviceData?.viber, 1000);
 
   const handleColorChange = (color) => {
     setDeviceData({ ...deviceData, bg_color: color });
@@ -192,6 +198,8 @@ const EditDevice = () => {
     debouncePhone,
     debounceEmail,
     debounceWebsite,
+    debounceWhatsapp,
+    debounceViber,
   ]);
 
   useEffect(() => {
@@ -392,6 +400,36 @@ const EditDevice = () => {
             value={deviceData.website}
             onInput={deviceDataPropChange}
           />
+        </FormControl>
+        <FormControl mb="20px">
+          <FormLabel htmlFor="title">Whatsapp</FormLabel>
+          <InputGroup>
+            <InputLeftElement>
+              <BsWhatsapp color="green" />
+            </InputLeftElement>
+            <Input
+              placeholder="Whatsapp Number"
+              variant="filled"
+              name="whatsapp"
+              value={deviceData.whatsapp}
+              onInput={deviceDataPropChange}
+            />
+          </InputGroup>
+        </FormControl>
+        <FormControl mb="20px">
+          <FormLabel htmlFor="title">Viber</FormLabel>
+          <InputGroup>
+            <InputLeftElement>
+              <FaViber color="purple" />
+            </InputLeftElement>
+            <Input
+              placeholder="Viber Number"
+              variant="filled"
+              name="viber"
+              value={deviceData.viber}
+              onInput={deviceDataPropChange}
+            />
+          </InputGroup>
         </FormControl>
       </Box>
 
